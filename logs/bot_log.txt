@@ -1,0 +1,521 @@
+bot (INFO) 2023-05-26 23:13:38,306: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:17:47,675: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:17:47,676: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:22:44,007: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:22:44,008: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:23:25,845: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:23:25,845: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:24:09,035: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:24:09,036: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:24:12,679: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:24:12,679: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:25:10,327: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:25:10,327: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:32:39,871: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:32:39,871: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:35:03,314: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:35:03,314: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:41:23,732: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:41:23,732: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:41:35,287: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:41:35,287: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:51:27,704: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:51:27,705: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-26 23:51:56,457: ****** Trade BOT ******
+bot (INFO) 2023-05-26 23:51:56,457: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-27 11:52:23,033: ****** Trade BOT ******
+bot (INFO) 2023-05-27 11:52:23,034: run strategy bb for BTCUSDT_15m
+bot (INFO) 2023-05-27 11:55:39,564: ****** Trade BOT ******
+bot (INFO) 2023-05-27 11:55:39,564: Run strategy bb for BTCUSDT_15m on um_futures_cross
+bot.bot (INFO) 2023-05-27 12:54:41,526: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 12:54:41,526: Run strategy bb for BTCUSDT_15m on um-futures-cross
+bot.bot (INFO) 2023-05-27 12:55:26,364: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 12:55:26,364: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 12:59:05,799: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 12:59:05,799: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:00:52,855: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:00:52,856: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:01:54,933: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:01:54,933: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:02:43,493: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:02:43,493: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:02:45,575: Received stop signal
+bot.bot (INFO) 2023-05-27 13:13:02,523: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:13:02,524: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:13:09,074: Received stop signal
+bot.bot (INFO) 2023-05-27 13:13:11,358: Received stop signal
+bot.bot (INFO) 2023-05-27 13:14:59,760: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:14:59,761: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:15:06,310: Received stop signal
+bot.bot (INFO) 2023-05-27 13:15:06,671: Received stop signal
+bot.bot (INFO) 2023-05-27 13:15:07,104: Received stop signal
+bot.bot (INFO) 2023-05-27 13:24:57,876: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:24:57,877: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:25:02,092: Received stop signal
+bot.bot (INFO) 2023-05-27 13:25:55,801: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:25:55,802: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:25:59,995: Received stop signal
+bot.bot (INFO) 2023-05-27 13:26:34,211: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:26:34,212: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:26:40,483: Received stop signal
+bot.bot (INFO) 2023-05-27 13:26:43,031: Received stop signal
+bot.bot (INFO) 2023-05-27 13:26:43,746: Received stop signal
+bot.bot (INFO) 2023-05-27 13:35:14,791: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:35:14,792: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:35:17,543: Received stop signal
+asyncio (ERROR) 2023-05-27 13:35:17,571: Fatal error on SSL transport
+protocol: <asyncio.sslproto.SSLProtocol object at 0x109b47910>
+transport: <_SelectorSocketTransport closing fd=11>
+Traceback (most recent call last):
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/selector_events.py", line 924, in write
+    n = self._sock.send(data)
+OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/sslproto.py", line 690, in _process_write_backlog
+    self._transport.write(chunk)
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/selector_events.py", line 930, in write
+    self._fatal_error(exc, 'Fatal write error on socket transport')
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/selector_events.py", line 725, in _fatal_error
+    self._force_close(exc)
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/selector_events.py", line 737, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/base_events.py", line 753, in call_soon
+    self._check_closed()
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/base_events.py", line 515, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+bot.bot (INFO) 2023-05-27 13:35:21,868: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:35:21,869: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:35:25,999: Received stop signal
+bot.bot (INFO) 2023-05-27 13:37:46,728: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:37:46,729: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:37:58,464: Received stop signal
+bot.bot (INFO) 2023-05-27 13:38:01,064: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:38:01,065: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:38:09,051: Received stop signal
+bot.bot (INFO) 2023-05-27 13:38:31,172: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:38:31,173: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:38:45,294: Received stop signal
+bot.bot (INFO) 2023-05-27 13:38:48,144: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:38:48,145: Run strategy bb for BTCUSDT_1m on um-futures-cross
+wss_klines (ERROR) 2023-05-27 13:39:05,173: An unexpected error occurred: 
+wss_klines (ERROR) 2023-05-27 13:39:20,399: An unexpected error occurred: 
+bot.bot (INFO) 2023-05-27 13:39:37,134: Received stop signal
+bot.bot (INFO) 2023-05-27 13:39:40,073: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:39:40,074: Run strategy bb for BTCUSDT_1m on um-futures-cross
+wss_klines (ERROR) 2023-05-27 13:39:55,579: An unexpected error occurred: 
+bot.bot (INFO) 2023-05-27 13:40:09,427: Received stop signal
+bot.bot (INFO) 2023-05-27 13:40:18,639: Received stop signal
+bot.bot (INFO) 2023-05-27 13:40:19,505: Received stop signal
+bot.bot (INFO) 2023-05-27 13:40:43,452: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:40:43,453: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:40:48,348: Received stop signal
+bot.bot (INFO) 2023-05-27 13:40:54,448: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:40:54,449: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:41:00,126: Received stop signal
+bot.bot (INFO) 2023-05-27 13:43:08,221: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:43:08,222: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:43:09,490: Received stop signal
+bot.bot (INFO) 2023-05-27 13:43:29,668: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 13:43:29,669: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 13:43:31,895: Received stop signal
+bot.bot (INFO) 2023-05-27 15:40:15,452: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 15:40:15,452: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 15:40:58,826: Received stop signal
+bot.bot (INFO) 2023-05-27 16:25:55,964: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:25:55,965: Run strategy bb for BTCUSDT_1m on um-futures-cross
+wss_klines (ERROR) 2023-05-27 16:26:09,340: An unexpected error occurred: Bot.tick_from_kline() got an unexpected keyword argument 'kline'
+bot.bot (INFO) 2023-05-27 16:26:19,946: Received stop signal
+bot.bot (INFO) 2023-05-27 16:32:32,438: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:32:32,439: Run strategy bb for BTCUSDT_1m on um-futures-cross
+wss_klines (ERROR) 2023-05-27 16:32:45,507: An unexpected error occurred: Bot.tick_from_kline() got an unexpected keyword argument 'kline'
+wss_klines (ERROR) 2023-05-27 16:32:58,433: An unexpected error occurred: Bot.tick_from_kline() got an unexpected keyword argument 'kline'
+bot.bot (INFO) 2023-05-27 16:33:00,294: Received stop signal
+bot.bot (INFO) 2023-05-27 16:33:24,735: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:33:24,735: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 16:33:49,446: Received stop signal
+bot.bot (INFO) 2023-05-27 16:33:50,053: Received stop signal
+bot.bot (INFO) 2023-05-27 16:36:00,098: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:36:00,098: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 16:36:12,491: Received stop signal
+bot.bot (INFO) 2023-05-27 16:37:23,943: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:37:23,943: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 16:40:14,321: Received stop signal
+bot.bot (INFO) 2023-05-27 16:55:16,082: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:55:16,083: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 16:57:52,247: Received stop signal
+bot.bot (INFO) 2023-05-27 16:58:50,165: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 16:58:50,166: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 16:58:50,182: Run strategy bb for DOGEUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 17:00:01,491: Received stop signal
+bot.bot (INFO) 2023-05-27 17:02:28,138: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-27 17:02:28,138: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-27 17:02:28,154: Run strategy bb for DOGEUSDT_1m on um-futures-cross
+wss_klines (WARNING) 2023-05-27 18:12:30,258: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-27 18:12:30,260: Connection closed, retrying...
+bot.bot (INFO) 2023-05-27 18:28:26,400: Received stop signal
+cancel_order (WARNING) 2023-05-27 20:05:26,418: An error occurred: 0, message='Attempt to decode JSON with unexpected mimetype: ', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685228725166&signature=7ba1239001579ffafef4a83b344c46b0d3b79cdd670964171d453d777a7a1595')
+cancel_all_orders (WARNING) 2023-05-27 20:07:34,630: An error occurred: 0, message='Attempt to decode JSON with unexpected mimetype: ', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685228825711&signature=c794bab0f243070125634b544dcd1999050b1e50dbba837d1422015935a13c7d')
+cancel_all_orders (WARNING) 2023-05-27 20:09:07,502: An error occurred: 0, message='Attempt to decode JSON with unexpected mimetype: ', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685228946220&signature=6f30de98ae57e55f6ceb8028163c7426d9421582df7a23cf51740d6c85bcec2e')
+cancel_all_orders (ERROR) 2023-05-27 20:12:28,876: An error occurred: 0, message='Attempt to decode JSON with unexpected mimetype: ', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685229147413&signature=1ec66daed5184d435b060c18f37a58165381cb0806ce93ec789954acaebca9f0'), status code: 0, message: Attempt to decode JSON with unexpected mimetype: 
+cancel_all_orders (ERROR) 2023-05-27 20:14:48,827: An error occurred: 0, message='Attempt to decode JSON with unexpected mimetype: ', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685229287585&signature=809dab0c9b5996511e2e23aa63a90b832e3b6e0091311aed5eaffabdc25a3a5a'), status code: 0, message: Attempt to decode JSON with unexpected mimetype: 
+cancel_all_orders (ERROR) 2023-05-27 20:15:47,924: An error occurred: 0, message='Attempt to decode JSON with unexpected mimetype: ', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685229346672&signature=874906873a988ba1700368483a442c5697f4cc400be7dae49503d40a573c3639'), status code: 0, message: Attempt to decode JSON with unexpected mimetype: 
+cancel_all_orders (ERROR) 2023-05-27 20:23:56,088: An error occurred: 405, message='Method Not Allowed', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685229834730&signature=3c6e01faa8c123cce262836190c79de11a8b455e7a18d6489d20225f192a4cda'), status code: 405, message: Method Not Allowed
+cancel_all_orders (ERROR) 2023-05-27 20:25:36,229: An error occurred: 405, message='Method Not Allowed', url=URL('https://fapi.binance.com/fapi/v1/allOpenOrders?symbol=DOGEUSDT&timestamp=1685229934873&signature=524c1ebd527f372ea56c3424be052df9c521c75967d08fd2fc83d70bb16db570'), status code: 405, message: Method Not Allowed
+bot.bot (INFO) 2023-05-28 11:19:29,253: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 11:19:29,253: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-28 11:19:38,902: Received stop signal
+bot.bot (INFO) 2023-05-28 14:24:26,045: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 14:24:26,046: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-28 14:26:45,349: Received stop signal
+bot.bot (INFO) 2023-05-28 14:35:45,257: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 14:35:45,257: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-28 14:35:53,673: Received stop signal
+bot.bot (INFO) 2023-05-28 14:48:26,953: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 14:48:26,953: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-28 14:49:10,509: Received stop signal
+bot.bot (INFO) 2023-05-28 19:23:43,025: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:23:43,026: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (WARNING) 2023-05-28 19:24:12,443: Stream encountered an error: 'symbol'. Reconnecting...
+bot.bot (INFO) 2023-05-28 19:26:34,710: Received stop signal
+bot.bot (INFO) 2023-05-28 19:27:26,376: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:27:26,377: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (ERROR) 2023-05-28 19:27:37,999: 'symbol'
+user_data_stream (WARNING) 2023-05-28 19:27:38,273: Stream encountered an error: 'symbol'. Reconnecting...
+bot.bot (INFO) 2023-05-28 19:29:07,540: Received stop signal
+bot.bot (INFO) 2023-05-28 19:29:48,595: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:29:48,595: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (WARNING) 2023-05-28 19:30:06,442: Stream encountered an error: 'symbol'. Reconnecting...
+bot.bot (INFO) 2023-05-28 19:30:44,614: Received stop signal
+bot.bot (INFO) 2023-05-28 19:34:43,924: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:34:43,924: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (ERROR) 2023-05-28 19:34:51,805: Stream encountered an error: 'symbol'.
+bot.bot (INFO) 2023-05-28 19:35:02,298: Received stop signal
+bot.bot (INFO) 2023-05-28 19:35:03,220: Received stop signal
+asyncio (ERROR) 2023-05-28 19:35:12,882: Task exception was never retrieved
+future: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:286> exception=KeyError('symbol')>
+Traceback (most recent call last):
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 138, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 165, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5745, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 5753, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'symbol'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 318, in handle_stream
+    raise e
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 309, in handle_stream
+    await handler(msg.json())
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 97, in user_data_handler
+    mask = self.positions['symbol'] == position['s']
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/pandas/core/frame.py", line 3807, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/pandas/core/indexes/base.py", line 3804, in get_loc
+    raise KeyError(key) from err
+KeyError: 'symbol'
+bot.bot (INFO) 2023-05-28 19:36:10,582: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:36:10,582: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (ERROR) 2023-05-28 19:38:14,264: Stream encountered an error: 'entry_price'.Reconnecting...
+bot.bot (INFO) 2023-05-28 19:38:27,374: Received stop signal
+bot.bot (INFO) 2023-05-28 19:39:02,573: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:39:02,573: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (ERROR) 2023-05-28 19:39:16,109: Stream encountered an error: single positional indexer is out-of-bounds.Reconnecting...
+bot.bot (INFO) 2023-05-28 19:40:27,853: Received stop signal
+bot.bot (INFO) 2023-05-28 19:40:36,473: Received stop signal
+bot.bot (INFO) 2023-05-28 19:40:40,080: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:40:40,080: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-28 19:41:02,729: Received stop signal
+bot.bot (INFO) 2023-05-28 19:44:39,056: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:44:39,056: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (ERROR) 2023-05-28 19:44:48,279: Stream encountered an error: Invalid comparison between dtype=datetime64[ns] and Decimal.Reconnecting...
+bot.bot (INFO) 2023-05-28 19:45:02,306: Received stop signal
+bot.bot (INFO) 2023-05-28 19:53:12,574: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-28 19:53:12,574: Run strategy bb for BTCUSDT_1m on um-futures-cross
+wss_klines (WARNING) 2023-05-28 20:45:24,709: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-29 00:35:49,674: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-29 03:46:57,134: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-29 04:57:35,418: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-29 08:00:01,278: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-29 09:10:52,224: Connection closed, retrying...
+wss_klines (WARNING) 2023-05-29 09:49:23,820: Connection closed, retrying...
+bot.bot (INFO) 2023-05-29 09:51:44,992: Received stop signal
+bot.bot (INFO) 2023-05-29 11:48:56,579: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 11:48:56,579: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 11:49:28,789: Received stop signal
+asyncio (ERROR) 2023-05-29 11:49:28,791: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+bot.bot (INFO) 2023-05-29 11:49:36,877: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 11:49:36,878: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 11:50:55,446: Received stop signal
+asyncio (ERROR) 2023-05-29 11:50:55,448: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+asyncio (DEBUG) 2023-05-29 11:51:12,827: Using selector: KqueueSelector
+bot.bot (INFO) 2023-05-29 11:51:12,829: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 11:51:12,830: Run strategy bb for BTCUSDT_1m on um-futures-cross
+get_klines (DEBUG) 2023-05-29 11:51:14,140: raw response: [[1685371620000,"27808.00","27809.00","27785.60","27787.80","362.933",1685371679999,"10087412.32350",2783,"97.182","2701266.04750","0"],[1685371680000,"27787.90","27788.50","27765.00","27775.10","625.202",1685371739999,"17364891.12300",4900,"246.726","6852645.11150","0"],[1685371740000,"27775.10","27782.80","27755.00","27758.50","599.983",1685371799999,"16659003.41270",4982,"228.511","6344628.54560","0"],[1685371800000,"27758.50","27792.00","27758.40","27778.10","691.248",1685371859999,"19202231.76270",5193,"427.710","11881155.03860","0"],[1685371860000,"27778.00","27779.30","27765.20","27770.00","87.349",1685371919999,"2425986.18250",1046,"21.545","598337.15480","0"]]
+user_data_stream (DEBUG) 2023-05-29 11:51:14,143: Got listen key: xHLVmWxOrifod1AV1Z7YWeN37va8gWBsyY7zexQqXq73pBqs9YFmfx0T2Zg3cpZ1
+bot.bot (INFO) 2023-05-29 11:51:39,062: Received stop signal
+asyncio (ERROR) 2023-05-29 11:51:39,064: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+asyncio (DEBUG) 2023-05-29 11:52:32,948: Using selector: KqueueSelector
+bot.bot (INFO) 2023-05-29 11:52:32,950: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 11:52:32,950: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (DEBUG) 2023-05-29 11:52:34,336: Got listen key: xHLVmWxOrifod1AV1Z7YWeN37va8gWBsyY7zexQqXq73pBqs9YFmfx0T2Zg3cpZ1
+get_klines (DEBUG) 2023-05-29 11:52:34,336: raw response: [[1685371680000,"27787.90","27788.50","27765.00","27775.10","625.202",1685371739999,"17364891.12300",4900,"246.726","6852645.11150","0"],[1685371740000,"27775.10","27782.80","27755.00","27758.50","599.983",1685371799999,"16659003.41270",4982,"228.511","6344628.54560","0"],[1685371800000,"27758.50","27792.00","27758.40","27778.10","691.248",1685371859999,"19202231.76270",5193,"427.710","11881155.03860","0"],[1685371860000,"27778.00","27812.00","27765.20","27801.10","736.909",1685371919999,"20481994.07470",5623,"508.324","14128718.73260","0"],[1685371920000,"27801.00","27801.10","27788.60","27792.80","150.212",1685371979999,"4174996.90080",1336,"52.745","1466020.55580","0"]]
+bot.bot (INFO) 2023-05-29 11:53:25,816: Received stop signal
+asyncio (ERROR) 2023-05-29 11:53:25,817: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+asyncio (DEBUG) 2023-05-29 11:54:57,139: Using selector: KqueueSelector
+bot.bot (INFO) 2023-05-29 11:54:57,141: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 11:54:57,141: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (DEBUG) 2023-05-29 11:54:58,408: Got listen key: xHLVmWxOrifod1AV1Z7YWeN37va8gWBsyY7zexQqXq73pBqs9YFmfx0T2Zg3cpZ1
+get_klines (DEBUG) 2023-05-29 11:54:58,409: raw response: [[1685371800000,"27758.50","27792.00","27758.40","27778.10","691.248",1685371859999,"19202231.76270",5193,"427.710","11881155.03860","0"],[1685371860000,"27778.00","27812.00","27765.20","27801.10","736.909",1685371919999,"20481994.07470",5623,"508.324","14128718.73260","0"],[1685371920000,"27801.00","27801.10","27788.60","27790.40","213.229",1685371979999,"5926296.99400",1931,"71.875","1997664.60490","0"],[1685371980000,"27790.50","27798.00","27790.00","27796.60","190.096",1685372039999,"5283531.19840",1771,"81.829","2274366.95080","0"],[1685372040000,"27796.70","27804.40","27793.70","27796.10","145.250",1685372099999,"4037877.95520",1603,"84.084","2337424.82230","0"]]
+bot.bot (INFO) 2023-05-29 11:55:40,263: Received stop signal
+asyncio (ERROR) 2023-05-29 11:55:40,265: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+asyncio (DEBUG) 2023-05-29 11:56:25,406: Using selector: KqueueSelector
+bot.bot (INFO) 2023-05-29 11:56:25,409: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 11:56:25,409: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (DEBUG) 2023-05-29 11:56:26,620: Got listen key: xHLVmWxOrifod1AV1Z7YWeN37va8gWBsyY7zexQqXq73pBqs9YFmfx0T2Zg3cpZ1
+get_klines (DEBUG) 2023-05-29 11:56:26,622: raw response: [[1685371920000,"27801.00","27801.10","27788.60","27790.40","213.229",1685371979999,"5926296.99400",1931,"71.875","1997664.60490","0"],[1685371980000,"27790.50","27798.00","27790.00","27796.60","190.096",1685372039999,"5283531.19840",1771,"81.829","2274366.95080","0"],[1685372040000,"27796.70","27804.40","27793.70","27796.10","146.065",1685372099999,"4060531.83520",1619,"84.669","2353685.59930","0"],[1685372100000,"27796.20","27801.20","27796.10","27800.20","105.339",1685372159999,"2928234.41040",1300,"68.228","1896580.13500","0"],[1685372160000,"27800.10","27800.20","27785.10","27788.30","121.079",1685372219999,"3364802.45450",1174,"28.639","795867.53300","0"]]
+bot.bot (INFO) 2023-05-29 11:56:31,209: Received stop signal
+asyncio (ERROR) 2023-05-29 11:56:31,210: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/Users/hudro/code/trade_bot_async/main.py", line 35, in main
+    await bot.run()
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 284, in run
+    await asyncio.gather(*tasks)
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 259, in run_strategy
+    await self.download_klines(strategy)
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 249, in download_klines
+    df = self.change_type_df(df)
+AttributeError: 'Bot' object has no attribute 'change_type_df'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+asyncio (DEBUG) 2023-05-29 12:00:11,985: Using selector: KqueueSelector
+bot.bot (INFO) 2023-05-29 12:00:11,988: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 12:00:11,988: Run strategy bb for BTCUSDT_1m on um-futures-cross
+user_data_stream (DEBUG) 2023-05-29 12:00:13,269: Got listen key: xHLVmWxOrifod1AV1Z7YWeN37va8gWBsyY7zexQqXq73pBqs9YFmfx0T2Zg3cpZ1
+get_klines (DEBUG) 2023-05-29 12:00:13,293: raw response: [[1685372160000,"27800.10","27800.20","27778.30","27778.40","163.870",1685372219999,"4553725.06960",2042,"42.627","1184529.11600","0"],[1685372220000,"27778.30","27782.10","27771.10","27775.60","320.650",1685372279999,"8906498.79330",2694,"128.112","3558443.86840","0"],[1685372280000,"27775.50","27775.60","27753.90","27756.10","365.880",1685372339999,"10158557.94360",3124,"96.082","2667624.27320","0"],[1685372340000,"27756.20","27782.00","27651.00","27782.00","5388.225",1685372399999,"149368004.28412",27858,"1923.189","53341345.58350","0"],[1685372400000,"27781.90","27783.40","27763.90","27766.80","224.424",1685372459999,"6232938.97330",1691,"93.907","2608091.03800","0"]]
+bot.bot (CRITICAL) 2023-05-29 12:00:13,297: 'Bot' object has no attribute 'change_type_df'
+bot.bot (INFO) 2023-05-29 12:00:25,956: Received stop signal
+asyncio (ERROR) 2023-05-29 12:00:25,958: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-8' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:301> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/Users/hudro/code/trade_bot_async/main.py", line 35, in main
+    await bot.run()
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 288, in run
+    await asyncio.gather(*tasks)
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 266, in run_strategy
+    raise e
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 260, in run_strategy
+    await self.download_klines(strategy)
+  File "/Users/hudro/code/trade_bot_async/bot/bot.py", line 249, in download_klines
+    df = self.change_type_df(df)
+AttributeError: 'Bot' object has no attribute 'change_type_df'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 321, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 325, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+bot.bot (INFO) 2023-05-29 12:01:32,372: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 12:01:32,372: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 12:01:37,965: Received stop signal
+bot.bot (INFO) 2023-05-29 12:03:26,108: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 12:03:26,108: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 12:04:07,296: Received stop signal
+bot.bot (INFO) 2023-05-29 12:06:59,504: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 12:06:59,505: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 12:07:05,911: Received stop signal
+bot.bot (INFO) 2023-05-29 12:09:43,560: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 12:09:43,560: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 12:10:24,500: Received stop signal
+bot.bot (INFO) 2023-05-29 12:53:51,397: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 12:53:51,397: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 12:56:07,041: Received stop signal
+bot.bot (INFO) 2023-05-29 13:07:00,444: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-29 13:07:00,445: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (INFO) 2023-05-29 13:07:25,137: Received stop signal
+bot.bot (INFO) 2023-05-30 11:49:18,680: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-30 11:49:18,697: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.bot (ERROR) 2023-05-30 11:49:19,987: 'quotePrecision'
+bot.bot (INFO) 2023-05-30 11:49:33,019: Received stop signal
+bot.bot (INFO) 2023-05-30 11:50:26,297: ****** Trade BOT ******
+bot.bot (INFO) 2023-05-30 11:50:26,314: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 12:30:49,401: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 12:30:49,418: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 12:31:01,979: Received stop signal
+bot.base_bot (INFO) 2023-05-30 12:33:34,327: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 12:33:34,343: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 12:33:36,377: Received stop signal
+main (INFO) 2023-05-30 12:33:36,377: Exit.
+bot.base_bot (INFO) 2023-05-30 12:35:53,351: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 12:35:53,369: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 12:36:05,765: Received stop signal
+main (INFO) 2023-05-30 12:36:05,766: Exit
+bot.base_bot (INFO) 2023-05-30 12:38:47,453: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 12:38:47,470: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 12:38:56,961: Received stop signal
+main (INFO) 2023-05-30 12:38:56,962: Exit
