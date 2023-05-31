@@ -12,7 +12,7 @@ async def main():
             market='um-futures-cross',
             symbol='BTCUSDT',
             tf='1m',
-            window=5,
+            window=100,
             params=dict(
                 bb_period=20,
                 bb_dev=2.0,

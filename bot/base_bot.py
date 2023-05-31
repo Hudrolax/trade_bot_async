@@ -10,6 +10,7 @@ from bot.binance_um_futures import (
     get_market_info,
 )
 from bot.data_class import Strategy
+from bot.errors import OpenOrderError, CloseOrderError, TickHandleError
 from decimal import Decimal
 
 logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ market_info_cols = ['market', 'symbol', 'status', 'baseAsset',
                     'tickSize', 'minQty', 'maxQty', 'stepSize', 'minNotional']
 
 
-def update_or_insert(df1: pd.DataFrame, new_row: dict, keys: list) -> pd.DataFrame:
+def update_or_insert(df1: pd.DataFrame, new_row: dict | pd.DataFrame, keys: list) -> pd.DataFrame:
     """The function makes insert or update a dataframe
 
     Args:
@@ -39,7 +40,12 @@ def update_or_insert(df1: pd.DataFrame, new_row: dict, keys: list) -> pd.DataFra
         pd.DataFrame: updated dataframe
     """
     df1.set_index(keys, inplace=True)
-    df2 = pd.DataFrame([new_row])
+    if isinstance(new_row, dict):
+        df2 = pd.DataFrame([new_row])
+    elif isinstance(new_row, pd.DataFrame):
+        df2 = new_row
+    else:
+        raise TypeError('new_row shoult be a dict or pd.Dataframe')
     df2.set_index(keys, inplace=True)
 
     # Create a dictionary of dtypes for each column in df1
@@ -131,14 +137,24 @@ class BaseBot:
         Returns:
             float: last price
         """
+        logger = logging.getLogger('last_price')
         async with self.klines_lock:
-            mask = (self.klines['market'] == market) & (
-                self.klines['symbol'] == symbol)
-            last_price = self.klines[mask].sort_values(
-                by='open_price').iloc[-1]['close']
+            try:
+                mask = (self.klines['market'] == market) & (
+                    self.klines['symbol'] == symbol)
+                last_price = self.klines[mask].sort_values(
+                    by='open_time').iloc[-1]['close']
+            except Exception as ex:
+                logger.critical(ex)
+                raise ex
         return last_price
 
     async def user_data_handler(self, data: dict):
+        """The function opdates account and ositions data by user data stream
+
+        Args:
+            data (dict): raw data from Binance
+        """
         if data['e'] == "ACCOUNT_UPDATE":
             # update balances
             async with self.balances_lock:
@@ -147,15 +163,17 @@ class BaseBot:
                         self.balances['market'] == 'um-futures-cross') & (self.balances['asset'] == asset['a'])
                     wb = float(asset['wb'])
                     cw = float(asset['cw'])
+                    primary_keys = ['market', 'asset']
+                    old_ab = self.balances[mask].iloc[-1]['ab']
+                    row = dict(
+                        market='um-futures-cross',
+                        asset=asset['a'],
+                        wb=wb,
+                        cw=cw,
+                        ab=old_ab,
+                    )
+                    self.balances = update_or_insert(self.balances, row, primary_keys)
 
-                    if mask.any():
-                        self.balances.loc[mask, 'wb'] = wb
-                        self.balances.loc[mask, 'cw'] = wb
-                    else:
-                        row = [['um-futures-cross', asset['a'], wb, cw]]
-                        new_row = pd.DataFrame(row, columns=balances_cols)
-                        self.balances = pd.concat(
-                            [self.balances, new_row], ignore_index=True)
                 self.balances.to_csv('balances.csv', index=False)
             # update positions
             async with self.positions_lock:
@@ -164,16 +182,9 @@ class BaseBot:
                     amount = Decimal(position['pa'])
                     entry_price = Decimal(position['ep'])
                     pnl = float(position['up'])
-                    async with self.klines_lock:
-                        klines_mask = (
-                            self.klines['market'] == 'um-futures-cross') & (self.klines['symbol'] == position['s'])
-                        prices = self.klines[klines_mask].sort_values(
-                            by='open_time')
-                        if len(prices) == 0:
-                            continue  # have no this symbol / market on strategy
-                        last_price = prices.iloc[-1]['close']
                     side = 'BUY'
-                    if last_price < entry_price and float(position['cr']) > 0:
+                    if await self.last_price(market='um-futures-cross', symbol=position['s']) < entry_price \
+                          and float(position['cr']) > 0:
                         side = 'SELL'
 
                     primary_keys = ['symbol']
@@ -200,6 +211,7 @@ class BaseBot:
         tf = strategy.tf
         market = strategy.market
         kline = data['k']
+        is_kline_closed: bool = kline['x']
         # preprocess klines info
         async with self.klines_lock:
             row = dict(
@@ -227,11 +239,13 @@ class BaseBot:
             df = self.klines[mask].sort_values(
                 by='open_time', ignore_index=True).copy()
 
-        # get account info
-        # update balances
-
         # apply a strategy
-        await self.on_tick(strategy=strategy, klines=df)
+        try:
+            await self.on_tick(strategy=strategy, klines=df, is_kline_closed=is_kline_closed)
+        except TickHandleError as ex:
+            logger.critical(
+                f'Unexpected tick error. NEED REFACTOR CODE!!! err: {ex}')
+            raise ex
 
     async def update_accaunt_info(self, market: str) -> None:
         """The function update account info for a specific market.
@@ -253,15 +267,27 @@ class BaseBot:
                 )
                 self.balances = update_or_insert(
                     self.balances, row, primary_keys)
+            self.balances.to_csv('balances.csv', index=False)
 
         # update positions
         async with self.positions_lock:
             for position in info['positions']:
+                if position['symbol'] not in self.klines['symbol'].drop_duplicates().to_list():
+                    continue
                 primary_keys = ['symbol']
-                side = 'BUY'
-                if float(position['entryPrice']) > self.last_price(market, position['symbol']) \
-                        and float(position['unrealizedProfit']) > 0:
-                    side = 'SELL'
+                side = position['ps']
+
+                try:
+                    last_price = await self.last_price(market, position['symbol'])
+                    entry_price = float(position['entryPrice'])
+                    pnl = float(position['unrealizedProfit'])
+                    if (entry_price > last_price) == (pnl > 0):
+                        side = 'SHORT'
+                    elif (entry_price < last_price) == (pnl > 0):
+                        side = 'LONG'
+                except IndexError as ex:
+                    logger.warning(f'update_position warning: {ex}')
+
                 row = dict(
                     symbol=position['symbol'],
                     amount=Decimal(position['positionAmt']),
@@ -271,13 +297,15 @@ class BaseBot:
                 )
                 self.positions = update_or_insert(
                     self.positions, row, primary_keys)
+            self.positions.to_csv('positions.csv', index=False)
 
-    async def on_tick(self, strategy: Strategy, klines: pd.DataFrame):
+    async def on_tick(self, strategy: Strategy, klines: pd.DataFrame, is_kline_closed: bool):
         """ Not implemented stategy handler
 
         Args:
             strategy (Strategy): a strategy object
             klines (pd.DataFrame): klines df of strategy symbol
+            is_kline_closed (bool): True, if kline is closed
         """
         raise NotImplementedError
 
@@ -292,9 +320,9 @@ class BaseBot:
         df['tf'] = strategy.tf
         df['market'] = strategy.market
         df = change_type_df(df)
+        primary_keys = ['market', 'symbol', 'tf', 'open_time']
         async with self.klines_lock:
-            self.klines = pd.concat([self.klines, df], ignore_index=True)
-            self.klines = self.klines.drop_duplicates()
+            self.klines = update_or_insert(self.klines, df, primary_keys)
 
     async def get_market_info(self, market: str) -> None:
         if market == 'um-futures-cross' or market == 'um-futures':
@@ -361,8 +389,11 @@ class BaseBot:
         loop.add_signal_handler(signal.SIGTSTP, self.stop_handler, loop, self)
         loop.add_signal_handler(signal.SIGTERM, self.stop_handler, loop, self)
 
+        # update accounts info
+        await self.update_accaunt_info(market='um-futures-cross')
+
         tasks = []
-        # run update market info
+        # update markets info
         tasks.append(asyncio.create_task(
             self.update_market_info('um-futures-cross')))
 

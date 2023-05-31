@@ -272,7 +272,7 @@ async def wss_klines(handler: Callable, strategy: Strategy, stop_event: asyncio.
         except asyncio.CancelledError as e:
             raise e
         except Exception as e:
-            logger.error(f"An unexpected error occurred: {e}")
+            logger.critical(f"An unexpected error from strategy: {e}")
             await asyncio.sleep(1)  # waiting before reconnect
 
 

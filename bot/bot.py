@@ -10,10 +10,16 @@ strategy_handlers = dict(
     bb=bb_on_tick,
 )
 
+
 class Bot(BaseBot):
-    async def on_tick(self, strategy: Strategy, klines: DataFrame):
+    async def on_tick(self, strategy: Strategy, klines: DataFrame, is_kline_closed: bool):
         try:
-            await strategy_handlers[strategy.name](bot=self, strategy=strategy, klines=klines)
+            await strategy_handlers[strategy.name](
+                bot=self,
+                strategy=strategy,
+                klines=klines,
+                is_kline_closed=is_kline_closed,
+            )
         except Exception as ex:
             logger.error(ex)
             raise ex

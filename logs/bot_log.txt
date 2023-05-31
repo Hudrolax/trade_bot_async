@@ -519,3 +519,551 @@ bot.base_bot (INFO) 2023-05-30 12:38:47,453: ****** Trade BOT ******
 bot.base_bot (INFO) 2023-05-30 12:38:47,470: Run strategy bb for BTCUSDT_1m on um-futures-cross
 bot.base_bot (INFO) 2023-05-30 12:38:56,961: Received stop signal
 main (INFO) 2023-05-30 12:38:56,962: Exit
+bot.base_bot (INFO) 2023-05-30 14:08:31,048: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 14:08:31,065: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 14:08:39,563: Received stop signal
+main (INFO) 2023-05-30 14:08:39,565: Exit
+bot.base_bot (INFO) 2023-05-30 14:24:22,841: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 14:24:22,858: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (ERROR) 2023-05-30 14:25:00,155: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 14:25:00,156: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:37:51,929: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:38:00,262: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:38:00,262: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:38:10,848: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:39:00,120: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:39:00,120: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:39:00,405: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:40:00,166: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:40:00,166: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:40:00,456: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:41:00,268: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:41:00,268: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:41:10,858: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:42:00,149: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:42:00,149: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:42:10,732: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:43:00,167: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:43:00,168: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:43:00,458: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:44:00,165: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:44:00,165: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:44:10,888: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:45:00,211: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:45:00,211: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:45:10,809: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:46:00,132: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:46:00,132: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:46:10,712: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:47:00,177: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:47:00,177: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:47:10,754: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:48:00,276: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:48:00,276: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:48:10,861: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:49:00,231: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:49:00,231: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:49:10,800: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:50:00,143: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:50:00,144: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:50:10,720: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:51:00,249: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:51:00,249: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:51:10,828: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:52:00,264: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:52:00,264: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:52:10,845: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:53:00,185: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:53:00,186: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:53:10,771: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:54:00,197: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:54:00,198: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:54:10,799: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:55:00,286: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:55:00,286: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:55:10,919: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:56:00,154: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:56:00,154: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:56:10,823: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:57:00,278: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:57:00,278: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:57:00,601: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:58:00,181: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:58:00,181: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:58:10,871: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 15:59:00,214: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 15:59:00,214: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 15:59:10,796: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:00:00,187: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:00:00,187: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:00:10,857: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:01:00,210: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:01:00,211: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:01:10,976: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:02:00,278: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:02:00,279: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:02:10,888: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:03:00,259: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:03:00,260: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:03:11,022: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:04:00,181: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:04:00,182: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:04:10,982: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:05:00,300: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:05:00,300: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:05:10,902: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:06:00,392: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:06:00,393: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:06:11,044: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:07:00,302: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:07:00,303: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:07:10,922: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:08:00,311: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:08:00,312: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:08:11,068: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:09:00,372: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:09:00,372: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:09:11,163: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:10:00,197: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:10:00,198: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:10:10,871: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:11:01,164: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:11:01,165: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:11:11,754: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:12:00,250: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:12:00,251: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:12:10,875: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:13:00,223: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:13:00,224: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:13:10,816: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:14:00,197: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:14:00,198: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:14:10,794: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:15:00,214: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:15:00,215: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:15:10,829: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:16:00,191: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:16:00,192: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:16:10,947: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:17:00,338: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:17:00,339: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:17:10,986: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:18:00,176: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:18:00,176: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:18:10,870: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:19:00,333: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:19:00,334: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:19:10,949: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:20:00,297: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:20:00,297: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:20:11,029: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:21:00,415: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:21:00,415: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:21:11,186: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:22:00,334: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:22:00,335: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:22:11,029: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:23:00,195: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:23:00,195: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:23:10,811: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:24:00,275: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:24:00,276: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:24:10,861: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:25:00,215: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:25:00,216: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:25:10,820: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:26:00,255: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:26:00,255: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:26:10,867: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:27:00,225: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:27:00,225: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:27:10,815: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:28:00,400: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:28:00,401: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:28:00,686: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:29:00,284: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:29:00,285: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:29:10,819: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:30:00,212: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:30:00,212: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:30:10,786: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:31:00,155: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:31:00,155: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:31:10,900: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:32:00,254: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:32:00,255: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:32:10,847: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:33:00,069: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:33:00,069: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:33:10,661: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:34:00,248: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:34:00,248: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:34:10,884: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:35:00,294: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:35:00,294: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:35:00,611: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:36:00,177: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:36:00,178: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:36:10,996: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:37:00,321: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:37:00,322: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:37:11,087: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:38:00,169: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:38:00,169: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:38:10,764: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:39:00,103: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:39:00,104: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:39:10,799: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:40:00,130: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:40:00,131: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:40:10,843: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:41:00,220: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:41:00,221: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:41:10,821: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:42:00,245: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:42:00,245: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:42:10,858: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:43:00,094: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:43:00,094: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:43:10,755: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:44:00,183: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:44:00,184: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:44:10,787: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:45:00,162: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:45:00,163: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:45:10,735: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:46:00,247: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:46:00,247: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:46:00,622: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:47:00,178: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:47:00,178: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:47:10,754: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:48:00,167: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:48:00,168: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:48:10,766: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.strategies.bb_strategy (ERROR) 2023-05-30 16:49:00,147: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+bot.bot (ERROR) 2023-05-30 16:49:00,148: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (ERROR) 2023-05-30 16:49:00,450: An unexpected error occurred: BaseBot.last_price() missing 2 required positional arguments: 'market' and 'symbol'
+wss_klines (WARNING) 2023-05-30 17:20:25,413: Connection closed, retrying...
+bot.base_bot (INFO) 2023-05-30 17:20:44,990: Received stop signal
+main (INFO) 2023-05-30 17:20:44,993: Exit
+bot.base_bot (INFO) 2023-05-30 17:22:37,907: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 17:22:37,924: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 17:40:16,990: Received stop signal
+main (INFO) 2023-05-30 17:40:16,991: Exit
+bot.base_bot (INFO) 2023-05-30 17:40:29,233: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 17:40:29,250: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (ERROR) 2023-05-30 17:41:00,182: 'open_price'
+bot.bot (ERROR) 2023-05-30 17:41:00,183: 'open_price'
+wss_klines (ERROR) 2023-05-30 17:41:10,788: An unexpected error occurred: 'open_price'
+bot.base_bot (INFO) 2023-05-30 17:41:20,890: Received stop signal
+main (INFO) 2023-05-30 17:41:20,891: Exit
+bot.base_bot (INFO) 2023-05-30 17:41:37,694: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 17:41:37,711: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-30 17:43:48,134: Received stop signal
+main (INFO) 2023-05-30 17:43:48,136: Exit
+bot.base_bot (INFO) 2023-05-30 17:43:59,621: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 17:43:59,638: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:45:00,220: bb price 27802.4
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:46:00,115: bb price 27798.1
+bot.base_bot (INFO) 2023-05-30 17:46:14,208: Received stop signal
+main (INFO) 2023-05-30 17:46:14,210: Exit
+bot.base_bot (INFO) 2023-05-30 17:46:26,674: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 17:46:26,691: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:47:00,150: bb price 27796.8
+bot.base_bot (INFO) 2023-05-30 17:47:58,926: Received stop signal
+main (INFO) 2023-05-30 17:47:58,928: Exit
+bot.base_bot (INFO) 2023-05-30 17:48:07,400: Received stop signal
+bot.base_bot (INFO) 2023-05-30 17:48:12,277: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-30 17:48:12,294: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:15,949: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:16,343: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:16,736: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:17,111: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:17,338: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:17,852: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:18,147: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:19,042: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:19,388: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:19,811: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:20,141: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:21,003: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:21,434: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:21,806: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:22,137: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:22,355: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:22,750: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:23,142: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:23,386: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:23,638: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:24,084: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:25,789: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:26,146: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:27,014: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:27,407: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:28,073: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:28,399: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:28,850: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:29,126: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:29,498: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:30,093: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:30,368: bb price 27791.8
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:31,399: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:31,841: bb price 27791.9
+bot.strategies.bb_strategy (INFO) 2023-05-30 17:48:32,698: bb price 27791.8
+bot.base_bot (INFO) 2023-05-30 17:48:32,911: Received stop signal
+main (INFO) 2023-05-30 17:48:32,912: Exit
+bot.base_bot (INFO) 2023-05-31 10:11:10,588: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 10:11:10,608: Run strategy bb for BTCUSDT_1m on um-futures-cross
+get_klines (WARNING) 2023-05-31 10:11:15,620: An error occurred: Cannot connect to host fapi.binance.com:443 ssl:default [nodename nor servname provided, or not known]
+get_market_info (WARNING) 2023-05-31 10:11:15,621: An error occurred: Cannot connect to host fapi.binance.com:443 ssl:default [nodename nor servname provided, or not known]
+get_market_info (WARNING) 2023-05-31 10:11:47,628: An error occurred: Cannot connect to host fapi.binance.com:443 ssl:default [nodename nor servname provided, or not known]
+get_klines (WARNING) 2023-05-31 10:11:47,629: An error occurred: Cannot connect to host fapi.binance.com:443 ssl:default [nodename nor servname provided, or not known]
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:12:59,969: bb price 27151.7
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:13:59,970: bb price 27142.9
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:15:00,043: bb price 27156.5
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:16:00,082: bb price 27147.5
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:16:59,921: bb price 27172.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:17:59,960: bb price 27165.1
+wss_klines (WARNING) 2023-05-31 10:41:11,147: Connection closed, retrying...
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:42:00,048: bb price 27166.9
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:43:00,088: bb price 27160.6
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:44:00,027: bb price 27178.1
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:45:00,126: bb price 27195.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:46:00,072: bb price 27198.8
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:47:00,060: bb price 27193.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:48:00,297: bb price 27178.1
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:49:00,019: bb price 27157.1
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:50:00,015: bb price 27158.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:51:00,050: bb price 27143.4
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:52:00,068: bb price 27151.9
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:53:00,018: bb price 27109.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:54:00,165: bb price 27105.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:55:00,058: bb price 27130.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:56:00,063: bb price 27120.2
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:57:00,056: bb price 27114.1
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:58:00,040: bb price 27131.7
+bot.strategies.bb_strategy (INFO) 2023-05-31 10:59:00,156: bb price 27119.9
+bot.strategies.bb_strategy (INFO) 2023-05-31 11:00:00,145: bb price 27104.0
+bot.strategies.bb_strategy (INFO) 2023-05-31 11:01:00,133: bb price 27059.4
+bot.strategies.bb_strategy (INFO) 2023-05-31 11:02:00,126: bb price 27061.9
+bot.strategies.bb_strategy (INFO) 2023-05-31 11:03:00,137: bb price 27064.2
+bot.base_bot (INFO) 2023-05-31 11:03:42,917: Received stop signal
+bot.base_bot (INFO) 2023-05-31 11:31:48,698: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 11:31:48,715: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 11:32:00,078: bb_20_2.0: bb_lower = nan
+bot.strategies.bb_strategy (INFO) 2023-05-31 11:33:00,147: bb_20_2.0: bb_lower = nan
+bot.base_bot (INFO) 2023-05-31 11:33:07,799: Received stop signal
+main (INFO) 2023-05-31 11:33:07,801: Exit
+bot.base_bot (INFO) 2023-05-31 11:44:59,873: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 11:44:59,890: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (CRITICAL) 2023-05-31 11:44:59,891: Invalid variable type: value should be str, int or float, got None of type <class 'NoneType'>
+bot.base_bot (INFO) 2023-05-31 11:45:33,242: Received stop signal
+asyncio (ERROR) 2023-05-31 11:45:33,245: unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-9' coro=<handle_stream() done, defined at /Users/hudro/code/trade_bot_async/bot/binance_um_futures.py:314> exception=AttributeError("module 'websockets' has no attribute 'exceptions'")>
+Traceback (most recent call last):
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/Users/hudro/miniforge3/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/Users/hudro/code/trade_bot_async/main.py", line 38, in main
+    await bot.run()
+  File "/Users/hudro/code/trade_bot_async/bot/base_bot.py", line 385, in run
+    await asyncio.gather(*tasks)
+  File "/Users/hudro/code/trade_bot_async/bot/base_bot.py", line 359, in run_strategy
+    raise e
+  File "/Users/hudro/code/trade_bot_async/bot/base_bot.py", line 353, in run_strategy
+    await self.download_klines(strategy)
+  File "/Users/hudro/code/trade_bot_async/bot/base_bot.py", line 290, in download_klines
+    klines_raw = await get_klines(strategy.symbol, strategy.tf, self.stop, limit=strategy.window)
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 229, in get_klines
+    return await unauthorizrd_request(FUTURES_KLINES_URL, 'get', params, logger, stop)
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 56, in unauthorizrd_request
+    async with session.request(http_method, url, params=params) as response:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client.py", line 1141, in __aenter__
+    self._resp = await self._coro
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client.py", line 508, in _request
+    req = self._request_class(
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_reqrep.py", line 283, in __init__
+    url2 = url.with_query(params)
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/yarl/_url.py", line 1007, in with_query
+    new_query = self._get_str_query(*args, **kwargs) or ""
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/yarl/_url.py", line 968, in _get_str_query
+    query = "&".join(self._query_seq_pairs(quoter, query.items()))
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/yarl/_url.py", line 931, in _query_seq_pairs
+    yield quoter(key) + "=" + quoter(cls._query_var(val))
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/yarl/_url.py", line 946, in _query_var
+    raise TypeError(
+TypeError: Invalid variable type: value should be str, int or float, got None of type <class 'NoneType'>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 334, in handle_stream
+    async for msg in ws:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 297, in __anext__
+    msg = await self.receive()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/client_ws.py", line 229, in receive
+    msg = await self._reader.read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 657, in read
+    return await super().read()
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/aiohttp/streams.py", line 616, in read
+    await self._waiter
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/hudro/code/trade_bot_async/bot/binance_um_futures.py", line 338, in handle_stream
+    except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
+  File "/Users/hudro/miniforge3/lib/python3.10/site-packages/websockets/imports.py", line 92, in __getattr__
+    raise AttributeError(f"module {package!r} has no attribute {name!r}")
+AttributeError: module 'websockets' has no attribute 'exceptions'
+bot.base_bot (INFO) 2023-05-31 11:48:40,535: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 11:48:40,553: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 11:48:47,689: Received stop signal
+main (INFO) 2023-05-31 11:48:47,691: Exit
+bot.base_bot (INFO) 2023-05-31 11:49:15,126: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 11:49:15,144: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 11:49:34,140: Received stop signal
+main (INFO) 2023-05-31 11:49:34,141: Exit
+bot.base_bot (INFO) 2023-05-31 11:53:00,830: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 11:53:00,847: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 11:53:05,072: Received stop signal
+main (INFO) 2023-05-31 11:53:05,073: Exit
+bot.base_bot (INFO) 2023-05-31 12:00:46,357: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:00:46,374: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 12:00:57,463: Received stop signal
+main (INFO) 2023-05-31 12:00:57,465: Exit
+bot.base_bot (INFO) 2023-05-31 12:01:27,869: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:01:27,885: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 12:01:30,877: Received stop signal
+main (INFO) 2023-05-31 12:01:30,879: Exit
+bot.base_bot (INFO) 2023-05-31 12:02:33,915: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:02:33,932: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:03:00,315: bb_20_2.0: bb_lower = 26967.340003406596
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:03:00,316: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:04:00,168: bb_20_2.0: bb_lower = 26974.68123877931
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:04:00,168: bb_20_2.0: length df=81
+user_data_stream (ERROR) 2023-05-31 12:04:31,761: Stream encountered an error: 5 columns passed, passed data had 4 columns.Reconnecting...
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:05:00,095: bb_20_2.0: bb_lower = 26977.75262334515
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:05:00,096: bb_20_2.0: length df=81
+bot.base_bot (INFO) 2023-05-31 12:05:13,129: Received stop signal
+main (INFO) 2023-05-31 12:05:13,131: Exit
+bot.base_bot (INFO) 2023-05-31 12:08:58,975: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:08:58,993: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:10:00,086: bb_20_2.0: bb_lower = 26965.86073257924
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:10:00,086: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:11:00,233: bb_20_2.0: bb_lower = 26957.987003626775
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:11:00,233: bb_20_2.0: length df=81
+bot.base_bot (INFO) 2023-05-31 12:11:37,207: Received stop signal
+main (INFO) 2023-05-31 12:11:37,208: Exit
+bot.base_bot (INFO) 2023-05-31 12:11:52,038: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:11:52,055: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:12:00,111: bb_20_2.0: bb_lower = 26941.147424892763
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:12:00,112: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:13:00,087: bb_20_2.0: bb_lower = 26930.408421187396
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:13:00,087: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:14:00,163: bb_20_2.0: bb_lower = 26920.986234309024
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:14:00,163: bb_20_2.0: length df=81
+user_data_stream (ERROR) 2023-05-31 12:14:51,406: Stream encountered an error: 5 columns passed, passed data had 4 columns.Reconnecting...
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:15:00,087: bb_20_2.0: bb_lower = 26908.79294388576
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:15:00,087: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:16:00,087: bb_20_2.0: bb_lower = 26905.64187494494
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:16:00,087: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:17:00,189: bb_20_2.0: bb_lower = 26906.78216915493
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:17:00,189: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:18:00,056: bb_20_2.0: bb_lower = 26904.250745957466
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:18:00,056: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:19:00,115: bb_20_2.0: bb_lower = 26903.135326639207
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:19:00,115: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:20:00,045: bb_20_2.0: bb_lower = 26900.337218037603
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:20:00,045: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:21:00,066: bb_20_2.0: bb_lower = 26901.621984002348
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:21:00,066: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:22:00,114: bb_20_2.0: bb_lower = 26904.923796402767
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:22:00,115: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:23:00,092: bb_20_2.0: bb_lower = 26911.01015696452
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:23:00,092: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:24:00,063: bb_20_2.0: bb_lower = 26913.353506331638
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:24:00,063: bb_20_2.0: length df=81
+bot.base_bot (INFO) 2023-05-31 12:24:26,864: Received stop signal
+main (INFO) 2023-05-31 12:24:26,864: Exit
+bot.base_bot (INFO) 2023-05-31 12:24:39,289: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:24:39,306: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:25:00,050: bb_20_2.0: bb_lower = 26914.376209761827
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:25:00,050: bb_20_2.0: length df=81
+bot.base_bot (INFO) 2023-05-31 12:25:05,456: Received stop signal
+main (INFO) 2023-05-31 12:25:05,457: Exit
+bot.base_bot (INFO) 2023-05-31 12:25:17,804: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:25:17,821: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 12:25:35,148: Received stop signal
+main (INFO) 2023-05-31 12:25:35,149: Exit
+bot.base_bot (INFO) 2023-05-31 12:26:36,343: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:26:36,360: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:27:00,062: bb_20_2.0: bb_lower = 26918.059563978644
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:27:00,062: bb_20_2.0: length df=81
+bot.base_bot (INFO) 2023-05-31 12:27:13,545: Received stop signal
+main (INFO) 2023-05-31 12:27:13,546: Exit
+bot.base_bot (INFO) 2023-05-31 12:30:14,927: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:37:57,459: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:38:32,132: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 12:38:35,006: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:39:00,225: bb_20_2.0: bb_lower = 26903.50611573339
+bot.strategies.bb_strategy (INFO) 2023-05-31 12:39:00,225: bb_20_2.0: length df=81
+user_data_stream (ERROR) 2023-05-31 12:39:13,322: Stream encountered an error: single positional indexer is out-of-bounds.Reconnecting...
+bot.base_bot (INFO) 2023-05-31 12:39:56,591: Received stop signal
+main (INFO) 2023-05-31 12:39:56,593: Exit
+bot.base_bot (INFO) 2023-05-31 13:13:31,167: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 13:13:33,598: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:14:00,210: bb_20_2.0: bb_lower = 26852.919995935867
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:14:00,211: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:15:00,142: bb_20_2.0: bb_lower = 26850.73279579922
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:15:00,143: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:16:00,134: bb_20_2.0: bb_lower = 26849.137165089072
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:16:00,135: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:17:00,221: bb_20_2.0: bb_lower = 26850.20549724173
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:17:00,222: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:18:00,256: bb_20_2.0: bb_lower = 26852.267932006664
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:18:00,257: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:19:00,246: bb_20_2.0: bb_lower = 26852.21845585683
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:19:00,246: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:20:00,134: bb_20_2.0: bb_lower = 26853.24380834631
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:20:00,134: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:21:00,199: bb_20_2.0: bb_lower = 26853.87126962811
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:21:00,199: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:22:00,220: bb_20_2.0: bb_lower = 26855.172090385582
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:22:00,220: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:23:00,301: bb_20_2.0: bb_lower = 26855.727667572606
+bot.strategies.bb_strategy (INFO) 2023-05-31 13:23:00,302: bb_20_2.0: length df=81
+wss_klines (WARNING) 2023-05-31 14:31:55,217: Connection closed, retrying...
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:31:59,951: bb_20_2.0: bb_lower = 26856.723369041218
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:31:59,951: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:32:59,957: bb_20_2.0: bb_lower = 26862.33061801013
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:32:59,958: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:34:00,002: bb_20_2.0: bb_lower = 26873.16763690508
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:34:00,003: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:34:59,973: bb_20_2.0: bb_lower = 26887.321560319193
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:34:59,974: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:35:59,981: bb_20_2.0: bb_lower = 26903.98222760524
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:35:59,981: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:37:00,045: bb_20_2.0: bb_lower = 26906.66326673931
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:37:00,045: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:38:00,026: bb_20_2.0: bb_lower = 26905.740499341562
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:38:00,026: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:38:59,967: bb_20_2.0: bb_lower = 26902.28630758863
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:38:59,967: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:39:59,963: bb_20_2.0: bb_lower = 26897.11252345979
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:39:59,963: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:40:59,979: bb_20_2.0: bb_lower = 26898.70460939901
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:40:59,979: bb_20_2.0: length df=81
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:42:00,033: bb_20_2.0: bb_lower = 26898.698413834423
+bot.strategies.bb_strategy (INFO) 2023-05-31 14:42:00,034: bb_20_2.0: length df=81
+bot.base_bot (INFO) 2023-05-31 14:42:33,252: Received stop signal
+main (INFO) 2023-05-31 14:42:33,253: Exit
+bot.base_bot (INFO) 2023-05-31 14:42:35,767: ****** Trade BOT ******
+bot.base_bot (INFO) 2023-05-31 14:42:37,018: Run strategy bb for BTCUSDT_1m on um-futures-cross
+bot.base_bot (INFO) 2023-05-31 14:42:47,207: Received stop signal
+main (INFO) 2023-05-31 14:42:47,210: Exit
+bot.base_bot (INFO) 2023-05-31 14:42:47,569: Received stop signal
+bot.base_bot (INFO) 2023-05-31 14:42:48,090: Received stop signal
