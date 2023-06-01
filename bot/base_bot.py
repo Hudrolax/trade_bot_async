@@ -237,7 +237,7 @@ class BaseBot:
         """The function return open orders for the strategy"""
         async with self.orders_lock:
             mask = (self.orders['market'] == strategy.market) & (
-                self.orders['symbol'] == strategy.symbol) & (self.orders['stats'] == 'NEW')
+                self.orders['symbol'] == strategy.symbol) & (self.orders['status'] == 'NEW')
             return self.orders[mask].copy()
 
     async def get_balance(self, strategy: Strategy) -> pd.Series:
