@@ -517,6 +517,7 @@ class BaseBot:
                 # self.market_info.to_csv('market_info.csv', index=False)
 
     async def update_market_info(self, market: str) -> None:
+        """The function updates market info"""
         while not self.stop.is_set():
             try:
                 await self.get_market_info(market)
@@ -527,6 +528,18 @@ class BaseBot:
                 logger.error(ex)
             finally:
                 await asyncio.sleep(60 * 60)  # one hour
+    
+    async def task_update_account_info(self, market: str) -> None:
+        """The function updates accounts info"""
+        while not self.stop.is_set():
+            try:
+                await asyncio.sleep(60)  # one minute
+                await self.update_accaunt_info(market)
+            except ValueError as ex:
+                logger.critical(ex)
+                raise ex
+            except Exception as ex:
+                logger.error(ex)
 
     async def run_strategy(self, strategy: Strategy) -> None:
         """Function runs an infinity loop for every strategy"""
@@ -556,6 +569,11 @@ class BaseBot:
         await self.update_accaunt_info(market='um-futures-cross')
 
         tasks = []
+
+        # update postions info
+        tasks.append(asyncio.create_task(
+            self.task_update_account_info('um-futures-cross')))
+
         # update markets info
         tasks.append(asyncio.create_task(
             self.update_market_info('um-futures-cross')))
