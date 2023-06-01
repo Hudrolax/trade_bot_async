@@ -22,6 +22,7 @@ def bollinger_bands(df, price='close', period=20, deviation=2.0, prefix='') -> t
     """
     # Copy the original dataframe
     df_copy = df.copy()
+    df_copy[price] = df_copy[price].astype(np.float64)
 
     # Add the prefix to the price column
     price_col = add_prefix(price, prefix)
@@ -62,6 +63,7 @@ def rsi(df, price='close', period=14, prefix='') -> tuple[pd.DataFrame, list]:
     """
     # Copy the original dataframe
     df_copy = df.copy()
+    df_copy[price] = df_copy[price].astype(np.float64)
 
     # Add the prefix to the price column
     price_col = add_prefix(price, prefix)
@@ -113,6 +115,7 @@ def moving_average(df, price='close', period=14, method='simple', prefix='') -> 
     """
     # Copy the original dataframe
     df_copy = df.copy()
+    df_copy[price] = df_copy[price].astype(np.float64)
 
     # Add the prefix to the price column
     price_col = add_prefix(price, prefix)
@@ -146,6 +149,9 @@ def average_true_range(df, high='high', low='low', close='close', period=14, pre
     """
     # Copy the original dataframe
     df_copy = df.copy()
+    df_copy[high] = df_copy[high].astype(np.float64)
+    df_copy[low] = df_copy[low].astype(np.float64)
+    df_copy[close] = df_copy[close].astype(np.float64)
 
     # Add the prefix to the high, low, and close columns
     high_col = add_prefix(high, prefix)
@@ -185,6 +191,7 @@ def macd(df, price='close', short_period=12, long_period=26, signal_period=9, pr
     """
     # Copy the original dataframe
     df_copy = df.copy()
+    df_copy[price] = df_copy[price].astype(np.float64)
 
     # Add the prefix to the price column
     price_col = add_prefix(price, prefix)
@@ -227,6 +234,8 @@ def obv(df, close='close', volume='vol', prefix='') -> tuple[pd.DataFrame, list]
     """
     # Copy the original dataframe
     df_copy = df.copy()
+    df_copy[close] = df_copy[close].astype(np.float64)
+    df_copy[volume] = df_copy[volume].astype(np.float64)
 
     # Add the prefix to the close and volume columns
     close_col = add_prefix(close, prefix)

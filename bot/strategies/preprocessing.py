@@ -1,5 +1,6 @@
 import pandas as pd
 import copy
+from decimal import Decimal, ROUND_HALF_UP
 from .indicators import (
     bollinger_bands,
     rsi,
@@ -18,6 +19,31 @@ indicator_func = {
     'macd': macd,
     'obv': obv,
 }
+
+def count_zeros_after_decimal(value):
+    if isinstance(value, float):
+        value = Decimal.from_float(value)
+    elif isinstance(value, int):
+        value = Decimal(value)
+    elif isinstance(value, str):
+        value = Decimal(value)
+    elif not isinstance(value, Decimal):
+        raise ValueError("Неподдерживаемый тип значения")
+
+    decimal_tuple = value.as_tuple()
+    exponent = decimal_tuple.exponent
+    zeros_count = 0
+
+    if exponent < 0:
+        zeros_count = abs(exponent) - 1
+
+    return zeros_count
+
+
+def float_to_decimal(value: Decimal | float, decimal_places):
+    decimal_value = Decimal(value)
+    rounding = Decimal(10) ** (-decimal_places)
+    return decimal_value.quantize(rounding, ROUND_HALF_UP)
 
 
 def calculate_indicators(klines: pd.DataFrame, kwargs: dict) -> pd.DataFrame:

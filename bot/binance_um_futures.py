@@ -127,21 +127,28 @@ async def get_account_info(**kwargs) -> dict:
         "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
         **kwargs
     }
-    response = authorized_request(
+    response = await authorized_request(
         FUTURES_ACCOUNT_INFO_URL, 'get', params, TickHandleError, logger)
     if not isinstance(response, dict):
         raise TypeError
     return response
 
 
-async def open_order(symbol: str, side: str, quantity: Decimal, price: Decimal, order_type: str = 'LIMIT', **kwargs) -> dict:
+async def open_order(
+    symbol: str,
+    side: str,
+    quantity: Decimal,
+    price: Decimal | None = None,
+    order_type: str = 'LIMIT',
+    **kwargs
+) -> dict:
     """The function opens an order
 
     Args:
         symbol (str): Symbol, like BTCUSDT
         side (str): BUY or SELL
-        quantity (Decimal): Quantity on quote asset. For BTCUSDT it's amount of BTC
-        price (Decimal): price in base asset. For BTCUSDT it's price in USDT.
+        quantity (Decimal): Quantity on base asset. For BTCUSDT it's amount of BTC
+        price (Decimal | None): price in quote asset. For BTCUSDT it's price in USDT. None - if type is None
         order_type (str, optional): ORDER type. See types in official Binance documentation. Defaults to 'LIMIT'.
         **kwargs: option kwargs. See official Binance documentation.
 
@@ -150,13 +157,20 @@ async def open_order(symbol: str, side: str, quantity: Decimal, price: Decimal, 
     """
     logger = logging.getLogger('open_order')
     # order parameters
+    kwargs = dict(
+        price=str(price),
+        type=order_type,
+        timeInForce="GTC",
+        **kwargs
+    )
+    if order_type == 'MARKET':
+        del kwargs['price']
+        del kwargs['timeInForce']
+
     params = {
         "symbol": symbol,
         "side": side,
-        "type": order_type,
-        "timeInForce": "GTC",
-        "quantity": str(quantity),
-        "price": str(price),
+        "quantity": str(quantity) if quantity >= 0 else str(abs(quantity)),
         "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
         **kwargs
     }

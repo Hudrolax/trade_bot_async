@@ -1,3 +1,4 @@
+import traceback
 import asyncio
 import signal
 import pandas as pd
@@ -8,10 +9,14 @@ from bot.binance_um_futures import (
     run_user_data_stream,
     get_account_info,
     get_market_info,
+    get_open_orders,
+    open_order,
+    cancel_order,
 )
 from bot.data_class import Strategy
 from bot.errors import OpenOrderError, CloseOrderError, TickHandleError
 from decimal import Decimal
+from .strategies.preprocessing import float_to_decimal, count_zeros_after_decimal
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +33,15 @@ orders_cols = ['market', 'symbol', 'side', 'type', 'quantity',
 market_info_cols = ['market', 'symbol', 'status', 'baseAsset',
                     'quoteAsset', 'pricePrecision', 'quantityPrecision', 'baseAssetPrecision', 'quotePrecision',
                     'tickSize', 'minQty', 'maxQty', 'stepSize', 'minNotional']
+
+
+def invert_side(side: str) -> str:
+    if side == 'BUY':
+        return 'SELL'
+    elif side == 'SELL':
+        return 'BUY'
+    else:
+        raise ValueError
 
 
 def update_or_insert(df1: pd.DataFrame, new_row: dict | pd.DataFrame, keys: list) -> pd.DataFrame:
@@ -73,14 +87,14 @@ def update_or_insert(df1: pd.DataFrame, new_row: dict | pd.DataFrame, keys: list
 
 def change_type_df(df: pd.DataFrame) -> pd.DataFrame:
     """The function normalizes the value types in the dataframe."""
-    # change float types
+    # change to decimal types
     for col in ['open', 'high', 'low', 'close', 'vol', 'qa_vol']:
-        if col in df.columns:
-            df[col] = df[col].astype('float64')
+        if col in df.columns and df[col].dtype != Decimal:
+            df[col] = df[col].astype(Decimal)
 
     # change int types
     for col in ['trades']:
-        if col in df.columns:
+        if col in df.columns and df[col].dtype != int:
             df[col] = df[col].astype(int)
 
     # change date types
@@ -131,6 +145,79 @@ class BaseBot:
         logger.info('Received stop signal')
         self.stop.set()
 
+    async def prepare_quantity(self, value: int | float, strategy: Strategy, price: Decimal):
+        async with self.market_lock:
+            mask = (self.market_info['market'] == strategy.market) & (
+                self.market_info['symbol'] == strategy.symbol)
+            market_info = self.market_info[mask].iloc[0]
+            step = market_info['stepSize']
+            min_notional = market_info['minNotional']
+
+        digits_after_zero = count_zeros_after_decimal(step)
+        quantity = float_to_decimal(value, digits_after_zero)
+        min_notional_in_base_asset = float_to_decimal(float(min_notional) / float(price), digits_after_zero)
+        if quantity < min_notional_in_base_asset:
+            quantity = min_notional_in_base_asset
+        return quantity
+
+    async def open_order(
+        self,
+        strategy: Strategy,
+        side: str,
+        quantity: Decimal,
+        price: Decimal,
+        order_type: str = 'LIMIT',
+    ) -> bool:
+        """The function opens a new one order."""
+        try:
+            await open_order(strategy.symbol, side, quantity, price, order_type)
+        except OpenOrderError:
+            return False
+
+        return True
+
+    async def cancel_order(
+        self,
+        strategy: Strategy,
+        order_id: int,
+    ) -> bool:
+        """The function cancels an order."""
+        try:
+            await cancel_order(strategy.symbol, order_id=order_id)
+        except CloseOrderError:
+            return False
+
+        return True
+
+    async def close_position(self, position: pd.Series, price: Decimal | None = None) -> bool:
+        """Close a position. If price is None - close by market price
+
+        Args:
+            position (pd.Series): series from self.positions df
+            price (Decimal | None, optional): close price. Defaults to None.
+
+        Returns:
+            bool: True if closed
+        """
+        try:
+            kwargs = dict(
+                price=price,
+                order_type='LIMIT',
+            )
+            if price is None:
+                del kwargs['price']
+                kwargs['order_type'] = 'MARKET'
+
+            await open_order(
+                symbol=position['symbol'],
+                side=invert_side(position['side']),
+                quantity=position['amount'],
+                **kwargs
+            )
+        except OpenOrderError:
+            return False
+        return True
+
     async def get_strategy_positions(self, strategy: Strategy) -> pd.DataFrame:
         """The function gets positions for a certain strategy"""
         async with self.positions_lock:
@@ -138,7 +225,46 @@ class BaseBot:
                 self.positions['symbol'] == strategy.symbol)
             return self.positions[mask].copy()
 
-    async def last_price(self, market: str, symbol: str) -> float:
+    async def get_open_orders(self, strategy: Strategy) -> pd.DataFrame:
+        """The function return open orders for the strategy"""
+        async with self.orders_lock:
+            mask = (self.orders['market'] == strategy.market) & (
+                self.orders['symbol'] == strategy.symbol) & (self.orders['stats'] == 'NEW')
+            return self.orders[mask].copy()
+
+    async def get_balance(self, strategy: Strategy) -> pd.Series:
+        async with self.market_lock:
+            mask = (self.market_info['market'] == strategy.market) & (
+                self.market_info['symbol'] == strategy.symbol)
+            quote_asset = self.market_info[mask].iloc[0]['quoteAsset']
+        async with self.balances_lock:
+            mask = (self.balances['market'] == strategy.market) & (
+                self.balances['asset'] == quote_asset)
+            balances = self.balances[mask].iloc[0]
+        return balances
+
+    async def update_open_orders(self, strategy: Strategy) -> None:
+        orders = await get_open_orders(strategy.symbol)
+        primary_keys = ['market', 'symbol', 'id']
+        async with self.orders_lock:
+            for order in orders:
+                row = dict(
+                    market=strategy.market,
+                    symbol=strategy.symbol,
+                    side=order['side'],
+                    type=order['type'],
+                    quantity=Decimal(order['origQty']),
+                    price=Decimal(order['price']),
+                    average_price=Decimal(order['avgPrice']),
+                    status=order['status'],
+                    id=order['orderId'],
+                    client_id=order['clientOrderId'],
+                    trade_time=pd.to_datetime(order['time'], unit='ms'),
+                )
+                self.orders = update_or_insert(self.orders, row, primary_keys)
+            self.orders.to_csv('orders.csv', index=False)
+
+    async def last_price(self, market: str, symbol: str) -> Decimal:
         """The function returns a last price of market/symbol
 
         Args:
@@ -146,7 +272,7 @@ class BaseBot:
             symbol (str): symbol name
 
         Returns:
-            float: last price
+            Decimal: last price
         """
         logger = logging.getLogger('last_price')
         async with self.klines_lock:
@@ -172,8 +298,8 @@ class BaseBot:
                 for asset in data['a']['B']:
                     mask = (
                         self.balances['market'] == 'um-futures-cross') & (self.balances['asset'] == asset['a'])
-                    wb = float(asset['wb'])
-                    cw = float(asset['cw'])
+                    wb = Decimal(asset['wb'])
+                    cw = Decimal(asset['cw'])
                     primary_keys = ['market', 'asset']
                     old_ab = self.balances[mask].iloc[-1]['ab']
                     row = dict(
@@ -192,13 +318,10 @@ class BaseBot:
                 for position in data['a']['P']:
                     mask = self.positions['symbol'] == position['s']
                     amount = Decimal(position['pa'])
+                    if amount <= 0.0000001:
+                        continue
                     entry_price = Decimal(position['ep'])
-                    pnl = float(position['up'])
-                    side = 'BUY'
-                    if await self.last_price(market='um-futures-cross', symbol=position['s']) < entry_price \
-                            and float(position['cr']) > 0:
-                        side = 'SELL'
-
+                    pnl = Decimal(position['up'])
                     primary_keys = ['symbol']
                     row = dict(
                         market='um-futures-cross',
@@ -206,7 +329,7 @@ class BaseBot:
                         amount=amount,
                         entry_price=entry_price,
                         pnl=pnl,
-                        side=side,
+                        side='BUY' if amount >= 0 else 'SELL',
                     )
                     self.positions = update_or_insert(
                         self.positions, row, primary_keys)
@@ -214,8 +337,6 @@ class BaseBot:
                 self.positions.to_csv('positions.csv', index=False)
 
         elif data['e'] == 'ORDER_TRADE_UPDATE':
-            orders_cols = ['market', 'symbol', 'side', 'type', 'quantity',
-               'price', 'average_price', 'status', 'id', 'client_id', 'trade_time']
             order = data['o']
             row = dict(
                 market='um-futures-cross',
@@ -255,13 +376,13 @@ class BaseBot:
                 market=market,
                 open_time=pd.to_datetime(kline['t'], unit='ms'),
                 close_time=pd.to_datetime(kline['T'], unit='ms'),
-                open=float(kline['o']),
-                high=float(kline['h']),
-                low=float(kline['l']),
-                close=float(kline['c']),
-                vol=float(kline['v']),
-                qa_vol=float(kline['q']),
-                trades=float(kline['n']),
+                open=Decimal(kline['o']),
+                high=Decimal(kline['h']),
+                low=Decimal(kline['l']),
+                close=Decimal(kline['c']),
+                vol=Decimal(kline['v']),
+                qa_vol=Decimal(kline['q']),
+                trades=int(kline['n']),
             )
             primary_keys = ['symbol', 'tf', 'market', 'open_time']
             self.klines = update_or_insert(self.klines, row, keys=primary_keys)
@@ -281,6 +402,11 @@ class BaseBot:
             logger.critical(
                 f'Unexpected tick error. NEED REFACTOR CODE!!! err: {ex}')
             raise ex
+        except Exception as e:
+            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+            error_message += traceback.format_exc()
+            logger.critical(error_message)
+            raise e
 
     async def update_accaunt_info(self, market: str) -> None:
         """The function update account info for a specific market.
@@ -296,9 +422,9 @@ class BaseBot:
                 row = dict(
                     market=market,
                     asset=asset['asset'],
-                    wb=float(asset['walletBalance']),
-                    cw=float(asset['crossWalletBalance']),
-                    ab=float(asset['availableBalance']),
+                    wb=Decimal(asset['walletBalance']),
+                    cw=Decimal(asset['crossWalletBalance']),
+                    ab=Decimal(asset['availableBalance']),
                 )
                 self.balances = update_or_insert(
                     self.balances, row, primary_keys)
@@ -310,26 +436,16 @@ class BaseBot:
                 if position['symbol'] not in self.klines['symbol'].drop_duplicates().to_list():
                     continue
                 primary_keys = ['symbol']
-                side = position['ps']
-
-                try:
-                    last_price = await self.last_price(market, position['symbol'])
-                    entry_price = float(position['entryPrice'])
-                    pnl = float(position['unrealizedProfit'])
-                    if (entry_price > last_price) == (pnl > 0):
-                        side = 'SHORT'
-                    elif (entry_price < last_price) == (pnl > 0):
-                        side = 'LONG'
-                except IndexError as ex:
-                    logger.warning(f'update_position warning: {ex}')
-
+                amount = Decimal(position['positionAmt'])
+                if amount <= 0.0000001:
+                    continue
                 row = dict(
-                    market='um-futures-cross',
+                    market=market,
                     symbol=position['symbol'],
-                    amount=Decimal(position['positionAmt']),
+                    amount=amount,
                     entry_price=Decimal(position['entryPrice']),
-                    pnl=float(position['unrealizedProfit']),
-                    side=side,
+                    pnl=Decimal(position['unrealizedProfit']),
+                    side='BUY' if amount >= 0 else 'SELL',
                 )
                 self.positions = update_or_insert(
                     self.positions, row, primary_keys)
@@ -409,6 +525,9 @@ class BaseBot:
         logger.info(
             f"Run strategy {strategy.name} for {strategy.symbol}_{strategy.tf} on {strategy.market}")
         try:
+            # update open orders
+            await self.update_open_orders(strategy)
+
             # download klines history before run the strategy
             await self.download_klines(strategy)
 
