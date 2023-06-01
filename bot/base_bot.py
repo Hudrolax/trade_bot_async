@@ -159,6 +159,14 @@ class BaseBot:
         if quantity < min_notional_in_base_asset:
             quantity = min_notional_in_base_asset
         return quantity
+    
+    async def get_quote_asset(self, strategy: Strategy) -> str:
+        """Function returns quote asset"""
+        async with self.market_lock:
+            mask = (self.market_info['market'] == strategy.market) & (
+                self.market_info['symbol'] == strategy.symbol)
+            market_info = self.market_info[mask].iloc[0]
+            return market_info['quoteAsset']
 
     async def open_order(
         self,

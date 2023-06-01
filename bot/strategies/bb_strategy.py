@@ -23,6 +23,8 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     )
     df = calculate_indicators(klines, indicators)
 
+    # get info
+    quote_asset = await bot.get_quote_asset(strategy)
     price = await bot.last_price(strategy.market, strategy.symbol)
     tick = df.iloc[-1]
     await bot.update_accaunt_info(strategy.market)
@@ -46,11 +48,13 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
                 strategy,
                 price,
             )
-            await bot.open_order(strategy, 'BUY', quantity, price)
+            if await bot.open_order(strategy, 'BUY', quantity, price):
+                log_info(f'BUY on {price} ({quantity}) {quote_asset}')
         elif price > tick['bb_upper']:
             quantity = await bot.prepare_quantity(
                 float(balance['ab']) * strategy.params.risk / 100,
                 strategy,
                 price,
             )
-            await bot.open_order(strategy, 'SELL', quantity, price)
+            if await bot.open_order(strategy, 'SELL', quantity, price):
+                log_info(f'BUY on {price} ({quantity}) {quote_asset}')
