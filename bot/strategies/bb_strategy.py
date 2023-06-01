@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kline_closed: bool) -> None:
     def log_info(message: Any):
         logger.info(
-            f'{strategy.name}_{strategy.params.bb_period}_{strategy.params.bb_dev}: {message}')
+            f'{strategy.name}_{strategy.symbol}_{strategy.params.bb_period}_{strategy.params.bb_dev}: {message}')
 
     if not is_kline_closed:
         return
@@ -29,6 +29,12 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     tick = df.iloc[-1]
     await bot.update_accaunt_info(strategy.market)
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
+
+    # close orders
+    orders: pd.DataFrame = await bot.get_open_orders(strategy)
+    for i, row in orders.iterrows():
+        if await bot.cancel_order(strategy, row['id']):
+            log_info(f"order {row['side']} {row['price']} was canceled.")
 
     # close positions
     for i, row in positions.iterrows():
