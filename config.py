@@ -30,6 +30,7 @@ FUTURES_LISTEN_KEY_URL = '/fapi/v1/listenKey'
 FUTURES_KLINES_URL = '/fapi/v1/klines'
 FUTURES_ACCOUNT_INFO_URL = '/fapi/v2/account'
 FUTURES_MARKET_INFO_URL = '/fapi/v1/exchangeInfo'
+FUTURES_OPEN_ORDERS_URL = '/fapi/v1/openOrders'
 
 if DEBUG:
     LOG_LEVEL = logging.DEBUG

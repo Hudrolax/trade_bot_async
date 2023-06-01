@@ -22,7 +22,9 @@ addition_klines_cols = ['symbol', 'tf', 'market']
 
 # wb - wallet balance, cw - cross wallet balance, bc = balance except pnl and cpomission
 balances_cols = ['market', 'asset', 'wb', 'cw', 'ab']
-positions_cols = ['symbol', 'amount', 'entry_price', 'pnl', 'side']
+positions_cols = ['market', 'symbol', 'amount', 'entry_price', 'pnl', 'side']
+orders_cols = ['market', 'symbol', 'side', 'type', 'quantity',
+               'price', 'average_price', 'status', 'id', 'client_id', 'trade_time']
 market_info_cols = ['market', 'symbol', 'status', 'baseAsset',
                     'quoteAsset', 'pricePrecision', 'quantityPrecision', 'baseAssetPrecision', 'quotePrecision',
                     'tickSize', 'minQty', 'maxQty', 'stepSize', 'minNotional']
@@ -96,6 +98,7 @@ class BaseBot:
         self.klines_lock = asyncio.Lock()
         self.balances_lock = asyncio.Lock()
         self.positions_lock = asyncio.Lock()
+        self.orders_lock = asyncio.Lock()
         self.market_lock = asyncio.Lock()
         self.strategies = []
         for strategy in strategies:
@@ -106,6 +109,7 @@ class BaseBot:
 
         self.balances: pd.DataFrame = pd.DataFrame([], columns=balances_cols)
         self.positions: pd.DataFrame = pd.DataFrame([], columns=positions_cols)
+        self.orders: pd.DataFrame = pd.DataFrame([], columns=orders_cols)
         self.market_info: pd.DataFrame = pd.DataFrame(
             [], columns=market_info_cols)
         logger.info('****** Trade BOT ******')
@@ -126,6 +130,13 @@ class BaseBot:
         """Handler for stop signal"""
         logger.info('Received stop signal')
         self.stop.set()
+
+    async def get_strategy_positions(self, strategy: Strategy) -> pd.DataFrame:
+        """The function gets positions for a certain strategy"""
+        async with self.positions_lock:
+            mask = (self.positions['market'] == strategy.market) & (
+                self.positions['symbol'] == strategy.symbol)
+            return self.positions[mask].copy()
 
     async def last_price(self, market: str, symbol: str) -> float:
         """The function returns a last price of market/symbol
@@ -172,7 +183,8 @@ class BaseBot:
                         cw=cw,
                         ab=old_ab,
                     )
-                    self.balances = update_or_insert(self.balances, row, primary_keys)
+                    self.balances = update_or_insert(
+                        self.balances, row, primary_keys)
 
                 self.balances.to_csv('balances.csv', index=False)
             # update positions
@@ -184,11 +196,12 @@ class BaseBot:
                     pnl = float(position['up'])
                     side = 'BUY'
                     if await self.last_price(market='um-futures-cross', symbol=position['s']) < entry_price \
-                          and float(position['cr']) > 0:
+                            and float(position['cr']) > 0:
                         side = 'SELL'
 
                     primary_keys = ['symbol']
                     row = dict(
+                        market='um-futures-cross',
                         symbol=position['s'],
                         amount=amount,
                         entry_price=entry_price,
@@ -200,7 +213,29 @@ class BaseBot:
 
                 self.positions.to_csv('positions.csv', index=False)
 
-    async def tick_handler(self, strategy: Strategy, data: dict):
+        elif data['e'] == 'ORDER_TRADE_UPDATE':
+            orders_cols = ['market', 'symbol', 'side', 'type', 'quantity',
+               'price', 'average_price', 'status', 'id', 'client_id', 'trade_time']
+            order = data['o']
+            row = dict(
+                market='um-futures-cross',
+                symbol=order['s'],
+                side=order['S'],
+                type=order['o'],
+                quantity=Decimal(order['q']),
+                price=Decimal(order['p']),
+                average_price=Decimal(order['ap']),
+                status=order['X'],
+                id=order['i'],
+                client_id=order['c'],
+                trade_time=pd.to_datetime(order['T'], unit='ms'),
+            )
+            primary_keys = ['market', 'symbol', 'id']
+            async with self.orders_lock:
+                self.orders = update_or_insert(self.orders, row, primary_keys)
+                self.orders.to_csv('orders.csv', index=False)
+
+    async def tick_handler(self, strategy: Strategy, data: dict) -> None:
         """ Handler receive a tick from Binance
 
         Args:
@@ -289,6 +324,7 @@ class BaseBot:
                     logger.warning(f'update_position warning: {ex}')
 
                 row = dict(
+                    market='um-futures-cross',
                     symbol=position['symbol'],
                     amount=Decimal(position['positionAmt']),
                     entry_price=Decimal(position['entryPrice']),
@@ -309,7 +345,7 @@ class BaseBot:
         """
         raise NotImplementedError
 
-    async def download_klines(self, strategy: Strategy):
+    async def download_klines(self, strategy: Strategy) -> None:
         """Function download and preprocess raw klines from Binance"""
         klines_raw = await get_klines(strategy.symbol, strategy.tf, self.stop, limit=strategy.window)
         df = pd.DataFrame(klines_raw).drop([9, 10, 11], axis=1)
@@ -368,7 +404,7 @@ class BaseBot:
             finally:
                 await asyncio.sleep(60 * 60)  # one hour
 
-    async def run_strategy(self, strategy: Strategy):
+    async def run_strategy(self, strategy: Strategy) -> None:
         """Function runs an infinity loop for every strategy"""
         logger.info(
             f"Run strategy {strategy.name} for {strategy.symbol}_{strategy.tf} on {strategy.market}")
@@ -382,7 +418,7 @@ class BaseBot:
             logger.critical(e)
             raise e
 
-    async def run(self):
+    async def run(self) -> None:
         """The main runbot method"""
         loop = asyncio.get_event_loop()
         loop.add_signal_handler(signal.SIGINT, self.stop_handler, loop, self)

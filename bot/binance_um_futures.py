@@ -13,6 +13,7 @@ from config import (
     FUTURES_LISTEN_KEY_URL,
     FUTURES_ACCOUNT_INFO_URL,
     FUTURES_MARKET_INFO_URL,
+    FUTURES_OPEN_ORDERS_URL,
 )
 from .data_class import Strategy
 import logging
@@ -71,7 +72,7 @@ async def authorized_request(
     params: dict,
     ErrorClass: Callable,
     logger: logging.Logger,
-) -> dict:
+) -> dict | list:
     """The function makes authorized request to API (trades)
 
     Args:
@@ -88,7 +89,7 @@ async def authorized_request(
 
     # make the signature
     query_string = urllib.parse.urlencode(params)
-    signature = hmac.new(SECRET_KEY.encode(),
+    signature = hmac.new(str(SECRET_KEY).encode(),
                          query_string.encode(), hashlib.sha256).hexdigest()
     params["signature"] = signature
 
@@ -126,8 +127,12 @@ async def get_account_info(**kwargs) -> dict:
         "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
         **kwargs
     }
-    return await authorized_request(FUTURES_ACCOUNT_INFO_URL, 'get', params, TickHandleError, logger)
-    
+    response = authorized_request(
+        FUTURES_ACCOUNT_INFO_URL, 'get', params, TickHandleError, logger)
+    if not isinstance(response, dict):
+        raise TypeError
+    return response
+
 
 async def open_order(symbol: str, side: str, quantity: Decimal, price: Decimal, order_type: str = 'LIMIT', **kwargs) -> dict:
     """The function opens an order
@@ -155,7 +160,10 @@ async def open_order(symbol: str, side: str, quantity: Decimal, price: Decimal, 
         "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
         **kwargs
     }
-    return await authorized_request(FUTURES_ORDER_URL, 'post', params, OpenOrderError, logger)
+    response = await authorized_request(FUTURES_ORDER_URL, 'post', params, OpenOrderError, logger)
+    if not isinstance(response, dict):
+        raise TypeError
+    return response
 
 
 async def cancel_order(symbol: str, order_id: int = -1, origClientOrderId: str = '', **kwargs) -> dict:
@@ -185,7 +193,11 @@ async def cancel_order(symbol: str, order_id: int = -1, origClientOrderId: str =
     if order_id == -1:
         del params['orderId']
         params['origClientOrderId'] = origClientOrderId
-    return await authorized_request(FUTURES_ORDER_URL, 'delete', params, CloseOrderError, logger)
+
+    response = await authorized_request(FUTURES_ORDER_URL, 'delete', params, CloseOrderError, logger)
+    if not isinstance(response, dict):
+        raise TypeError
+    return response
 
 
 async def cancel_all_orders(symbol: str, **kwargs) -> bool:
@@ -204,7 +216,22 @@ async def cancel_all_orders(symbol: str, **kwargs) -> bool:
         **kwargs
     }
     response = await authorized_request(FUTURES_CANCEL_ALL_ORDERS_URL, 'delete', params, CloseOrderError, logger)
+    if not isinstance(response, dict):
+        raise TypeError
     return response['code'] == 200
+
+
+async def get_open_orders(symbol: str, **kwargs) -> list:
+    logger = logging.getLogger('get_open_orders')
+    params = {
+        "symbol": symbol,
+        "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
+        **kwargs
+    }
+    response = await authorized_request(FUTURES_OPEN_ORDERS_URL, 'get', params, TickHandleError, logger)
+    if not isinstance(response, list):
+        raise TypeError
+    return response
 
 
 async def get_klines(symbol: str, interval: str, stop: asyncio.Event, limit: int = 500) -> dict:
@@ -228,6 +255,7 @@ async def get_klines(symbol: str, interval: str, stop: asyncio.Event, limit: int
     }
     return await unauthorizrd_request(FUTURES_KLINES_URL, 'get', params, logger, stop)
 
+
 async def get_market_info(stop: asyncio.Event) -> dict:
     """The function gets exchange info (symbols, limits)
 
@@ -240,6 +268,7 @@ async def get_market_info(stop: asyncio.Event) -> dict:
     logger = logging.getLogger('get_market_info')
     params = {}
     return await unauthorizrd_request(FUTURES_MARKET_INFO_URL, 'get', params, logger, stop)
+
 
 async def wss_klines(handler: Callable, strategy: Strategy, stop_event: asyncio.Event):
     """ The function runs websocket stream for receiving kline data every 250ms
