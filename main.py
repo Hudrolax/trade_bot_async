@@ -31,6 +31,18 @@ async def main():
                 risk=50,
             )
         ),
+        dict(
+            name='bb',
+            market='um-futures-cross',
+            symbol='LQTYUSDT',
+            tf='15m',
+            window=100,
+            params=dict(
+                bb_period=20,
+                bb_dev=1.8,
+                risk=50,
+            )
+        ),
     ]
 
     bot = Bot(strategies=strategies)
