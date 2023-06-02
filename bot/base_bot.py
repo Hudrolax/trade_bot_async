@@ -459,12 +459,10 @@ class BaseBot:
             # update positions
             async with self.positions_lock:
                 for position in info['positions']:
-                    if position['symbol'] not in self.klines['symbol'].drop_duplicates().to_list():
+                    amount = Decimal(position['positionAmt'])
+                    if float(position['entryPrice']) == 0 or abs(amount) <= 0.0000001 :
                         continue
                     primary_keys = ['symbol']
-                    amount = Decimal(position['positionAmt'])
-                    if amount <= 0.0000001:
-                        continue
                     row = dict(
                         market=market,
                         symbol=position['symbol'],
