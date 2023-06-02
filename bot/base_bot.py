@@ -305,7 +305,7 @@ class BaseBot:
         return last_price
 
     async def user_data_handler(self, data: dict):
-        """The function opdates account and ositions data by user data stream
+        """The function updates account data by user data stream
 
         Args:
             data (dict): raw data from Binance
