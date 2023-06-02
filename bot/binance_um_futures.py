@@ -1,3 +1,4 @@
+import traceback
 import asyncio
 import aiohttp
 import websockets
@@ -63,6 +64,12 @@ async def unauthorizrd_request(
         except aiohttp.ClientError as e:
             logger.warning(f"An error occurred: {e}")
             await asyncio.sleep(2)  # pause before next attemption
+        except Exception as e:
+            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+            error_message += traceback.format_exc()
+            logger.critical(error_message)
+            raise TickHandleError(f'unexpected error {e}')
+
     raise aiohttp.ClientError("Connection error.")
 
 
@@ -112,7 +119,9 @@ async def authorized_request(
         logger.warning(f"An error occurred: {str(e)}")
         raise ErrorClass(f'{e}')
     except Exception as e:
-        logger.error(e)
+        error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+        error_message += traceback.format_exc()
+        logger.critical(error_message)
         raise ErrorClass(f'unexpected error {e}')
 
 
@@ -156,27 +165,35 @@ async def open_order(
         dict: parsed JSON response
     """
     logger = logging.getLogger('open_order')
-    # order parameters
-    kwargs = dict(
-        price=str(price),
-        type=order_type,
-        timeInForce="GTC",
-        **kwargs
-    )
-    if order_type == 'MARKET':
-        del kwargs['price']
-        del kwargs['timeInForce']
+    try:
+        # order parameters
+        kwargs = dict(
+            price=str(price),
+            type=order_type,
+            timeInForce="GTC",
+            **kwargs
+        )
+        if order_type == 'MARKET':
+            del kwargs['price']
+            del kwargs['timeInForce']
 
-    params = {
-        "symbol": symbol,
-        "side": side,
-        "quantity": str(quantity) if quantity >= 0 else str(abs(quantity)),
-        "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
-        **kwargs
-    }
-    response = await authorized_request(FUTURES_ORDER_URL, 'post', params, OpenOrderError, logger)
+        params = {
+            "symbol": symbol,
+            "side": side,
+            "quantity": str(quantity) if quantity >= 0 else str(abs(quantity)),
+            "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
+            **kwargs
+        }
+        response = await authorized_request(FUTURES_ORDER_URL, 'post', params, OpenOrderError, logger)
+    except Exception as e:
+        error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+        error_message += traceback.format_exc()
+        logger.critical(error_message)
+        raise e
+
     if not isinstance(response, dict):
-        raise TypeError
+        logger.error(f'Response not a dict. Response type {type(response)}')
+        raise OpenOrderError(f'Response not a dict. Response type {type(response)}')
     return response
 
 
@@ -198,19 +215,27 @@ async def cancel_order(symbol: str, order_id: int = -1, origClientOrderId: str =
     if order_id == -1 and origClientOrderId == '':
         raise CloseOrderError('order_id or origClientOrderId must be sent.')
 
-    params = {
-        "symbol": symbol,
-        "orderId": order_id,
-        "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
-        **kwargs
-    }
-    if order_id == -1:
-        del params['orderId']
-        params['origClientOrderId'] = origClientOrderId
+    try:
+        params = {
+            "symbol": symbol,
+            "orderId": order_id,
+            "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
+            **kwargs
+        }
+        if order_id == -1:
+            del params['orderId']
+            params['origClientOrderId'] = origClientOrderId
 
-    response = await authorized_request(FUTURES_ORDER_URL, 'delete', params, CloseOrderError, logger)
+        response = await authorized_request(FUTURES_ORDER_URL, 'delete', params, CloseOrderError, logger)
+    except Exception as e:
+            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+            error_message += traceback.format_exc()
+            logger.critical(error_message)
+            raise e
+
     if not isinstance(response, dict):
-        raise TypeError
+        logger.error(f'Response no a dict. Response type {type(response)}')
+        raise CloseOrderError(f'Response no a dict. Response type {type(response)}')
     return response
 
 
@@ -231,7 +256,8 @@ async def cancel_all_orders(symbol: str, **kwargs) -> bool:
     }
     response = await authorized_request(FUTURES_CANCEL_ALL_ORDERS_URL, 'delete', params, CloseOrderError, logger)
     if not isinstance(response, dict):
-        raise TypeError
+        logger.error(f'Response is not a dict. Response type {type(response)}')
+        raise CloseOrderError(f'Response is not a dict. Response type {type(response)}')
     return response['code'] == 200
 
 
@@ -244,7 +270,8 @@ async def get_open_orders(symbol: str, **kwargs) -> list:
     }
     response = await authorized_request(FUTURES_OPEN_ORDERS_URL, 'get', params, TickHandleError, logger)
     if not isinstance(response, list):
-        raise TypeError
+        logger.error(f'Response is not a dict. Response type {type(response)}')
+        raise TickHandleError(f'Response is not a dict. Response type {type(response)}')
     return response
 
 
