@@ -45,7 +45,7 @@ def invert_side(side: str) -> str:
 
 
 def calculate_pnl(entry_price, exit_price, amount, commission=0.004):
-    return (exit_price - entry_price) * amount * (1 - commission)
+    return (float(exit_price) - float(entry_price)) * float(amount) * (1 - commission)
 
 
 def update_or_insert(df1: pd.DataFrame, new_row: dict | pd.DataFrame, keys: list) -> pd.DataFrame:
