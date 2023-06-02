@@ -54,6 +54,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
 
     if len(positions) == 0:
         if price < tick['bb_lower']:
+        # BUY
             quantity = await bot.prepare_quantity(
                 float(balance['ab']) * strategy.params.risk / 100,
                 strategy,
@@ -62,10 +63,11 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
             if await bot.open_order(strategy, 'BUY', quantity, price):
                 log_info(f'BUY on {price} ({quantity}) {quote_asset}')
         elif price > tick['bb_upper']:
+            # SELL
             quantity = await bot.prepare_quantity(
                 float(balance['ab']) * strategy.params.risk / 100,
                 strategy,
                 price,
             )
             if await bot.open_order(strategy, 'SELL', quantity, price):
-                log_info(f'BUY on {price} ({quantity}) {quote_asset}')
+                log_info(f'SELL on {price} ({quantity}) {quote_asset}')
