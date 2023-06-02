@@ -1,9 +1,10 @@
-from ..base_bot import BaseBot
+from ..base_bot import BaseBot, calculate_pnl
 from ..data_class import Strategy
 from .preprocessing import calculate_indicators
 import pandas as pd
 import logging
 from typing import Any
+import asyncio
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,10 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     quote_asset = await bot.get_quote_asset(strategy)
     price = await bot.last_price(strategy.market, strategy.symbol)
     tick = df.iloc[-1]
-    await bot.update_accaunt_info(strategy.market)
+    await asyncio.gather(
+        bot.update_accaunt_info(strategy.market),
+        bot.update_open_orders(strategy),
+    )
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
 
     # close orders
@@ -41,7 +45,8 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
         if (row['side'] == 'BUY' and price > tick['bb_middle']) \
                 or (row['side'] == 'SELL' and price < tick['bb_middle']):
             if await bot.close_position(row, price):
-                log_info(f"position closed. PNL {row['pnl']}")
+                pnl = calculate_pnl(row['entry_price'], float(price), row['amount'])
+                log_info(f"Try to close position at {price}. PNL {round(pnl, 2)}")
 
     # open new order
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)

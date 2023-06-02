@@ -44,6 +44,10 @@ def invert_side(side: str) -> str:
         raise ValueError
 
 
+def calculate_pnl(entry_price, exit_price, amount, commission=0.004):
+    return (exit_price - entry_price) * amount * (1 - commission)
+
+
 def update_or_insert(df1: pd.DataFrame, new_row: dict | pd.DataFrame, keys: list) -> pd.DataFrame:
     """The function makes insert or update a dataframe
 
@@ -252,25 +256,31 @@ class BaseBot:
         return balances
 
     async def update_open_orders(self, strategy: Strategy) -> None:
-        orders = await get_open_orders(strategy.symbol)
-        primary_keys = ['market', 'symbol', 'id']
-        async with self.orders_lock:
-            for order in orders:
-                row = dict(
-                    market=strategy.market,
-                    symbol=strategy.symbol,
-                    side=order['side'],
-                    type=order['type'],
-                    quantity=Decimal(order['origQty']),
-                    price=Decimal(order['price']),
-                    average_price=Decimal(order['avgPrice']),
-                    status=order['status'],
-                    id=order['orderId'],
-                    client_id=order['clientOrderId'],
-                    trade_time=pd.to_datetime(order['time'], unit='ms'),
-                )
-                self.orders = update_or_insert(self.orders, row, primary_keys)
-            self.orders.to_csv('orders.csv', index=False)
+        try:
+            orders = await get_open_orders(strategy.symbol)
+            primary_keys = ['market', 'symbol', 'id']
+            async with self.orders_lock:
+                for order in orders:
+                    row = dict(
+                        market=strategy.market,
+                        symbol=strategy.symbol,
+                        side=order['side'],
+                        type=order['type'],
+                        quantity=Decimal(order['origQty']),
+                        price=Decimal(order['price']),
+                        average_price=Decimal(order['avgPrice']),
+                        status=order['status'],
+                        id=order['orderId'],
+                        client_id=order['clientOrderId'],
+                        trade_time=pd.to_datetime(order['time'], unit='ms'),
+                    )
+                    self.orders = update_or_insert(self.orders, row, primary_keys)
+                self.orders.to_csv('orders.csv', index=False)
+        except Exception as e:
+            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+            error_message += traceback.format_exc()
+            logger.critical(error_message)
+            raise e
 
     async def last_price(self, market: str, symbol: str) -> Decimal:
         """The function returns a last price of market/symbol
@@ -300,69 +310,76 @@ class BaseBot:
         Args:
             data (dict): raw data from Binance
         """
-        if data['e'] == "ACCOUNT_UPDATE":
-            # update balances
-            async with self.balances_lock:
-                for asset in data['a']['B']:
-                    mask = (
-                        self.balances['market'] == 'um-futures-cross') & (self.balances['asset'] == asset['a'])
-                    wb = Decimal(asset['wb'])
-                    cw = Decimal(asset['cw'])
-                    primary_keys = ['market', 'asset']
-                    old_ab = self.balances[mask].iloc[-1]['ab']
-                    row = dict(
-                        market='um-futures-cross',
-                        asset=asset['a'],
-                        wb=wb,
-                        cw=cw,
-                        ab=old_ab,
-                    )
-                    self.balances = update_or_insert(
-                        self.balances, row, primary_keys)
+        try:
+            if data['e'] == "ACCOUNT_UPDATE":
+                # update balances
+                async with self.balances_lock:
+                    for asset in data['a']['B']:
+                        mask = (
+                            self.balances['market'] == 'um-futures-cross') & (self.balances['asset'] == asset['a'])
+                        wb = Decimal(asset['wb'])
+                        cw = Decimal(asset['cw'])
+                        primary_keys = ['market', 'asset']
+                        old_ab = self.balances[mask].iloc[-1]['ab']
+                        row = dict(
+                            market='um-futures-cross',
+                            asset=asset['a'],
+                            wb=wb,
+                            cw=cw,
+                            ab=old_ab,
+                        )
+                        self.balances = update_or_insert(
+                            self.balances, row, primary_keys)
 
-                self.balances.to_csv('balances.csv', index=False)
-            # update positions
-            async with self.positions_lock:
-                for position in data['a']['P']:
-                    mask = self.positions['symbol'] == position['s']
-                    amount = Decimal(position['pa'])
-                    if amount <= 0.0000001:
-                        continue
-                    entry_price = Decimal(position['ep'])
-                    pnl = Decimal(position['up'])
-                    primary_keys = ['symbol']
-                    row = dict(
-                        market='um-futures-cross',
-                        symbol=position['s'],
-                        amount=amount,
-                        entry_price=entry_price,
-                        pnl=pnl,
-                        side='BUY' if amount >= 0 else 'SELL',
-                    )
-                    self.positions = update_or_insert(
-                        self.positions, row, primary_keys)
+                    self.balances.to_csv('balances.csv', index=False)
+                # update positions
+                async with self.positions_lock:
+                    for position in data['a']['P']:
+                        mask = self.positions['symbol'] == position['s']
+                        amount = Decimal(position['pa'])
+                        if amount <= 0.0000001:
+                            continue
+                        entry_price = Decimal(position['ep'])
+                        pnl = Decimal(position['up'])
+                        primary_keys = ['symbol']
+                        row = dict(
+                            market='um-futures-cross',
+                            symbol=position['s'],
+                            amount=amount,
+                            entry_price=entry_price,
+                            pnl=pnl,
+                            side='BUY' if amount >= 0 else 'SELL',
+                        )
+                        self.positions = update_or_insert(
+                            self.positions, row, primary_keys)
 
-                self.positions.to_csv('positions.csv', index=False)
+                    self.positions.to_csv('positions.csv', index=False)
 
-        elif data['e'] == 'ORDER_TRADE_UPDATE':
-            order = data['o']
-            row = dict(
-                market='um-futures-cross',
-                symbol=order['s'],
-                side=order['S'],
-                type=order['o'],
-                quantity=Decimal(order['q']),
-                price=Decimal(order['p']),
-                average_price=Decimal(order['ap']),
-                status=order['X'],
-                id=order['i'],
-                client_id=order['c'],
-                trade_time=pd.to_datetime(order['T'], unit='ms'),
-            )
-            primary_keys = ['market', 'symbol', 'id']
-            async with self.orders_lock:
-                self.orders = update_or_insert(self.orders, row, primary_keys)
-                self.orders.to_csv('orders.csv', index=False)
+            elif data['e'] == 'ORDER_TRADE_UPDATE':
+                order = data['o']
+                row = dict(
+                    market='um-futures-cross',
+                    symbol=order['s'],
+                    side=order['S'],
+                    type=order['o'],
+                    quantity=Decimal(order['q']),
+                    price=Decimal(order['p']),
+                    average_price=Decimal(order['ap']),
+                    status=order['X'],
+                    id=order['i'],
+                    client_id=order['c'],
+                    trade_time=pd.to_datetime(order['T'], unit='ms'),
+                )
+                primary_keys = ['market', 'symbol', 'id']
+                async with self.orders_lock:
+                    self.orders = update_or_insert(self.orders, row, primary_keys)
+                    self.orders.to_csv('orders.csv', index=False)
+        except Exception as e:
+            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+            error_message += traceback.format_exc()
+            logger.critical(error_message)
+            raise e
+
 
     async def tick_handler(self, strategy: Strategy, data: dict) -> None:
         """ Handler receive a tick from Binance
@@ -422,42 +439,48 @@ class BaseBot:
         Args:
             market (str): market name
         """
-        info: dict = await get_account_info()
-        # update balances
-        async with self.balances_lock:
-            for asset in info['assets']:
-                primary_keys = ['market', 'asset']
-                row = dict(
-                    market=market,
-                    asset=asset['asset'],
-                    wb=Decimal(asset['walletBalance']),
-                    cw=Decimal(asset['crossWalletBalance']),
-                    ab=Decimal(asset['availableBalance']),
-                )
-                self.balances = update_or_insert(
-                    self.balances, row, primary_keys)
-            self.balances.to_csv('balances.csv', index=False)
+        try:
+            info: dict = await get_account_info()
+            # update balances
+            async with self.balances_lock:
+                for asset in info['assets']:
+                    primary_keys = ['market', 'asset']
+                    row = dict(
+                        market=market,
+                        asset=asset['asset'],
+                        wb=Decimal(asset['walletBalance']),
+                        cw=Decimal(asset['crossWalletBalance']),
+                        ab=Decimal(asset['availableBalance']),
+                    )
+                    self.balances = update_or_insert(
+                        self.balances, row, primary_keys)
+                self.balances.to_csv('balances.csv', index=False)
 
-        # update positions
-        async with self.positions_lock:
-            for position in info['positions']:
-                if position['symbol'] not in self.klines['symbol'].drop_duplicates().to_list():
-                    continue
-                primary_keys = ['symbol']
-                amount = Decimal(position['positionAmt'])
-                if amount <= 0.0000001:
-                    continue
-                row = dict(
-                    market=market,
-                    symbol=position['symbol'],
-                    amount=amount,
-                    entry_price=Decimal(position['entryPrice']),
-                    pnl=Decimal(position['unrealizedProfit']),
-                    side='BUY' if amount >= 0 else 'SELL',
-                )
-                self.positions = update_or_insert(
-                    self.positions, row, primary_keys)
-            self.positions.to_csv('positions.csv', index=False)
+            # update positions
+            async with self.positions_lock:
+                for position in info['positions']:
+                    if position['symbol'] not in self.klines['symbol'].drop_duplicates().to_list():
+                        continue
+                    primary_keys = ['symbol']
+                    amount = Decimal(position['positionAmt'])
+                    if amount <= 0.0000001:
+                        continue
+                    row = dict(
+                        market=market,
+                        symbol=position['symbol'],
+                        amount=amount,
+                        entry_price=Decimal(position['entryPrice']),
+                        pnl=Decimal(position['unrealizedProfit']),
+                        side='BUY' if amount >= 0 else 'SELL',
+                    )
+                    self.positions = update_or_insert(
+                        self.positions, row, primary_keys)
+                self.positions.to_csv('positions.csv', index=False)
+        except Exception as e:
+            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+            error_message += traceback.format_exc()
+            logger.critical(error_message)
+            raise e
 
     async def on_tick(self, strategy: Strategy, klines: pd.DataFrame, is_kline_closed: bool):
         """ Not implemented stategy handler
@@ -529,18 +552,6 @@ class BaseBot:
             finally:
                 await asyncio.sleep(60 * 60)  # one hour
     
-    async def task_update_account_info(self, market: str) -> None:
-        """The function updates accounts info"""
-        while not self.stop.is_set():
-            try:
-                await asyncio.sleep(60)  # one minute
-                await self.update_accaunt_info(market)
-            except ValueError as ex:
-                logger.critical(ex)
-                raise ex
-            except Exception as ex:
-                logger.error(ex)
-
     async def run_strategy(self, strategy: Strategy) -> None:
         """Function runs an infinity loop for every strategy"""
         logger.info(
@@ -569,10 +580,6 @@ class BaseBot:
         await self.update_accaunt_info(market='um-futures-cross')
 
         tasks = []
-
-        # update postions info
-        tasks.append(asyncio.create_task(
-            self.task_update_account_info('um-futures-cross')))
 
         # update markets info
         tasks.append(asyncio.create_task(
