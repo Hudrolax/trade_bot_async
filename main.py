@@ -16,7 +16,7 @@ async def main():
             params=dict(
                 bb_period=20,
                 bb_dev=2.0,
-                risk=100,
+                risk=50,
             )
         ),
         dict(
