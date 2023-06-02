@@ -44,6 +44,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     for i, row in positions.iterrows():
         if (row['side'] == 'BUY' and price > tick['bb_middle']) \
                 or (row['side'] == 'SELL' and price < tick['bb_middle']):
+            log_info(f'positions {positions}') # debug
             if await bot.close_position(row, price):
                 pnl = calculate_pnl(row['entry_price'], price, row['amount'])
                 log_info(f"Try to close {row['side']} position at {price}. PNL {round(pnl, 2)}")
