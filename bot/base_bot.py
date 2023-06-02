@@ -337,7 +337,7 @@ class BaseBot:
                     for position in data['a']['P']:
                         mask = self.positions['symbol'] == position['s']
                         amount = Decimal(position['pa'])
-                        if amount <= 0.0000001:
+                        if abs(amount) <= 0.0000001:
                             continue
                         entry_price = Decimal(position['ep'])
                         pnl = Decimal(position['up'])
