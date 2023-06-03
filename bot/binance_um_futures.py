@@ -194,7 +194,8 @@ async def open_order(
 
     if not isinstance(response, dict):
         logger.error(f'Response not a dict. Response type {type(response)}')
-        raise OpenOrderError(f'Response not a dict. Response type {type(response)}')
+        raise OpenOrderError(
+            f'Response not a dict. Response type {type(response)}')
     return response
 
 
@@ -230,14 +231,15 @@ async def cancel_order(symbol: str, order_id: int = -1, origClientOrderId: str =
 
         response = await authorized_request(FUTURES_ORDER_URL, 'delete', params, CloseOrderError, logger)
     except Exception as e:
-            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
-            error_message += traceback.format_exc()
-            logger.critical(error_message)
-            raise e
+        error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+        error_message += traceback.format_exc()
+        logger.critical(error_message)
+        raise e
 
     if not isinstance(response, dict):
         logger.error(f'Response no a dict. Response type {type(response)}')
-        raise CloseOrderError(f'Response no a dict. Response type {type(response)}')
+        raise CloseOrderError(
+            f'Response no a dict. Response type {type(response)}')
     return response
 
 
@@ -260,7 +262,8 @@ async def cancel_all_orders(symbol: str, **kwargs) -> bool:
     response = await authorized_request(FUTURES_CANCEL_ALL_ORDERS_URL, 'delete', params, CloseOrderError, logger)
     if not isinstance(response, dict):
         logger.error(f'Response is not a dict. Response type {type(response)}')
-        raise CloseOrderError(f'Response is not a dict. Response type {type(response)}')
+        raise CloseOrderError(
+            f'Response is not a dict. Response type {type(response)}')
     return response['code'] == 200
 
 
@@ -274,7 +277,8 @@ async def get_open_orders(symbol: str, **kwargs) -> list:
     response = await authorized_request(FUTURES_OPEN_ORDERS_URL, 'get', params, TickHandleError, logger)
     if not isinstance(response, list):
         logger.error(f'Response is not a dict. Response type {type(response)}')
-        raise TickHandleError(f'Response is not a dict. Response type {type(response)}')
+        raise TickHandleError(
+            f'Response is not a dict. Response type {type(response)}')
     return response
 
 
@@ -389,6 +393,7 @@ async def handle_stream(
     listen_key: str,
     handler: Callable,
     stop_event: asyncio.Event,
+    market: str,
     logger: logging.Logger,
 ) -> None:
     """User data stream handler
@@ -398,6 +403,7 @@ async def handle_stream(
         listen_key (str): exist listen key
         handler (Callable): data handler
         stop_event (asyncio.Event): the stop event
+        market (str): maket name
         logger (logging.Logger): actual logger
     """
     while not stop_event.is_set():
@@ -407,7 +413,7 @@ async def handle_stream(
                 async for msg in ws:
                     # Handle received message
                     logger.debug(msg)
-                    await handler(msg.json())
+                    await handler(msg.json(), market)
         except (websockets.exceptions.ConnectionClosedError, websockets.exceptions.ConnectionClosedOK) as e:
             logger.warning(
                 f"Stream encountered an error: {e}. Reconnecting...")
@@ -418,12 +424,13 @@ async def handle_stream(
             await asyncio.sleep(1)
 
 
-async def run_user_data_stream(data_handler: Callable, stop_event: asyncio.Event):
+async def run_user_data_stream(data_handler: Callable, stop_event: asyncio.Event, market: str):
     """The function runs user-data stream
 
     Args:
         data_handler (Callable): user-data handler
         stop_event (asyncio.Event): the stop event
+        market (str): market name
     """
     logger = logging.getLogger('user_data_stream')
     async with aiohttp.ClientSession() as session:
@@ -432,7 +439,7 @@ async def run_user_data_stream(data_handler: Callable, stop_event: asyncio.Event
 
         # Launch the stream handler
         handler = asyncio.create_task(
-            handle_stream(session, listen_key, data_handler, stop_event, logger))
+            handle_stream(session, listen_key, data_handler, stop_event, market, logger))
 
         while not stop_event.is_set():
             await asyncio.sleep(60*50)  # 50 minutes
@@ -451,4 +458,4 @@ async def run_user_data_stream(data_handler: Callable, stop_event: asyncio.Event
                 handler.cancel()
                 await handler
                 handler = asyncio.create_task(
-                    handle_stream(session, listen_key, data_handler, stop_event, logger))
+                    handle_stream(session, listen_key, data_handler, stop_event, market, logger))

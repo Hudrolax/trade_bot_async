@@ -53,7 +53,7 @@ def update_or_insert(df1: pd.DataFrame, new_row: dict | pd.DataFrame, keys: list
 
     Args:
         df1 (pd.DataFrame): the dataframe
-        new_row (dict): new row in dict format
+        new_row (dict, pd.DataFrame): new row in dict format or one-row dataframe
         keys (list): list of primary keys
 
     Returns:
@@ -131,7 +131,7 @@ class BaseBot:
         self.market_info: pd.DataFrame = pd.DataFrame(
             [], columns=market_info_cols)
         logger.info('****** Trade BOT ******')
-    
+
     @staticmethod
     def error_handler(func):
         async def wrapper(self, *args, **kwargs):
@@ -172,11 +172,12 @@ class BaseBot:
 
         digits_after_zero = count_zeros_after_decimal(step)
         quantity = float_to_decimal(value, digits_after_zero)
-        min_notional_in_base_asset = float_to_decimal(float(min_notional) / float(price), digits_after_zero)
+        min_notional_in_base_asset = float_to_decimal(
+            float(min_notional) / float(price), digits_after_zero)
         if quantity < min_notional_in_base_asset:
             quantity = min_notional_in_base_asset
         return quantity
-    
+
     async def get_quote_asset(self, strategy: Strategy) -> str:
         """Function returns quote asset"""
         async with self.market_lock:
@@ -244,20 +245,21 @@ class BaseBot:
         return True
 
     async def get_strategy_positions(self, strategy: Strategy) -> pd.DataFrame:
-        """The function gets positions for a certain strategy"""
+        """The function gets positions for a certain strategy from dataframe"""
         async with self.positions_lock:
             mask = (self.positions['market'] == strategy.market) & (
                 self.positions['symbol'] == strategy.symbol)
             return self.positions[mask].copy()
 
     async def get_open_orders(self, strategy: Strategy) -> pd.DataFrame:
-        """The function return open orders for the strategy"""
+        """The function return open orders for the strategy from dataframe"""
         async with self.orders_lock:
             mask = (self.orders['market'] == strategy.market) & (
                 self.orders['symbol'] == strategy.symbol) & (self.orders['status'] == 'NEW')
             return self.orders[mask].copy()
 
     async def get_balance(self, strategy: Strategy) -> pd.Series:
+        """The function gets balances Series from balances dataframe"""
         async with self.market_lock:
             mask = (self.market_info['market'] == strategy.market) & (
                 self.market_info['symbol'] == strategy.symbol)
@@ -270,9 +272,16 @@ class BaseBot:
 
     @error_handler
     async def update_open_orders(self, strategy: Strategy) -> None:
+        """The function gets open order from Binance and update the dataframe."""
         orders = await get_open_orders(strategy.symbol)
         primary_keys = ['market', 'symbol', 'id']
         async with self.orders_lock:
+            # drop market/symbol rows first
+            mask = (self.orders['market'] != strategy.market) & (
+                self.orders['symbol'] != strategy.symbol)
+            self.orders = self.orders[mask]
+
+            # add new rows
             for order in orders:
                 row = dict(
                     market=strategy.market,
@@ -312,7 +321,7 @@ class BaseBot:
                 raise ex
         return last_price
 
-    async def user_data_handler(self, data: dict):
+    async def user_data_handler(self, data: dict, market: str):
         """The function updates account data by user data stream
 
         Args:
@@ -324,13 +333,13 @@ class BaseBot:
                 async with self.balances_lock:
                     for asset in data['a']['B']:
                         mask = (
-                            self.balances['market'] == 'um-futures-cross') & (self.balances['asset'] == asset['a'])
+                            self.balances['market'] == market) & (self.balances['asset'] == asset['a'])
                         wb = Decimal(asset['wb'])
                         cw = Decimal(asset['cw'])
                         primary_keys = ['market', 'asset']
                         old_ab = self.balances[mask].iloc[-1]['ab']
                         row = dict(
-                            market='um-futures-cross',
+                            market=market,
                             asset=asset['a'],
                             wb=wb,
                             cw=cw,
@@ -340,18 +349,17 @@ class BaseBot:
                             self.balances, row, primary_keys)
 
                     self.balances.to_csv('balances.csv', index=False)
+
                 # update positions
                 async with self.positions_lock:
                     for position in data['a']['P']:
-                        mask = self.positions['symbol'] == position['s']
+                        # update changes
                         amount = Decimal(position['pa'])
-                        if abs(amount) <= 0.0000001:
-                            continue
                         entry_price = Decimal(position['ep'])
                         pnl = Decimal(position['up'])
                         primary_keys = ['symbol']
                         row = dict(
-                            market='um-futures-cross',
+                            market=market,
                             symbol=position['s'],
                             amount=amount,
                             entry_price=entry_price,
@@ -361,12 +369,16 @@ class BaseBot:
                         self.positions = update_or_insert(
                             self.positions, row, primary_keys)
 
+                    # del closed positions
+                    indexes = self.positions[self.positions['amount'] == 0].index
+                    self.positions = self.positions.drop(indexes).reset_index(drop=True)
+
                     self.positions.to_csv('positions.csv', index=False)
 
             elif data['e'] == 'ORDER_TRADE_UPDATE':
                 order = data['o']
                 row = dict(
-                    market='um-futures-cross',
+                    market=market,
                     symbol=order['s'],
                     side=order['S'],
                     type=order['o'],
@@ -380,13 +392,13 @@ class BaseBot:
                 )
                 primary_keys = ['market', 'symbol', 'id']
                 async with self.orders_lock:
-                    self.orders = update_or_insert(self.orders, row, primary_keys)
+                    self.orders = update_or_insert(
+                        self.orders, row, primary_keys)
                     self.orders.to_csv('orders.csv', index=False)
         except Exception as e:
             error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
             error_message += traceback.format_exc()
             logger.critical(error_message)
-
 
     async def tick_handler(self, strategy: Strategy, data: dict) -> None:
         """ Handler receive a tick from Binance
@@ -449,8 +461,12 @@ class BaseBot:
         info: dict = await get_account_info()
         # update balances
         async with self.balances_lock:
+            # clear balances
+            mask = self.balances['market'] != market
+            self.balances = self.balances[mask]
+            # add new balances
+            primary_keys = ['market', 'asset']
             for asset in info['assets']:
-                primary_keys = ['market', 'asset']
                 row = dict(
                     market=market,
                     asset=asset['asset'],
@@ -464,11 +480,15 @@ class BaseBot:
 
         # update positions
         async with self.positions_lock:
+            # clear positions
+            mask = self.positions['market'] != market
+            self.positions = self.positions[mask]
+            # add new positions
             for position in info['positions']:
                 amount = Decimal(position['positionAmt'])
-                if float(position['entryPrice']) == 0 or abs(amount) <= 0.0000001 :
+                if float(position['entryPrice']) == 0 or abs(amount) <= 0.0000001:
                     continue
-                primary_keys = ['symbol']
+                primary_keys = ['market', 'symbol']
                 row = dict(
                     market=market,
                     symbol=position['symbol'],
@@ -506,7 +526,7 @@ class BaseBot:
         primary_keys = ['market', 'symbol', 'tf', 'open_time']
         async with self.klines_lock:
             self.klines = update_or_insert(self.klines, df, primary_keys)
-        
+
     @error_handler
     async def get_market_info(self, market: str) -> None:
         if market == 'um-futures-cross' or market == 'um-futures':
@@ -514,38 +534,43 @@ class BaseBot:
         else:
             raise ValueError(f'Wrong market name: {market}')
 
-        for symbol in raw_data['symbols']:
-            row = dict(
-                market=market,
-                symbol=symbol['symbol'],
-                status=symbol['status'],
-                baseAsset=symbol['baseAsset'],
-                quoteAsset=symbol['quoteAsset'],
-                pricePrecision=Decimal(symbol['pricePrecision']),
-                quantityPrecision=Decimal(symbol['quantityPrecision']),
-                baseAssetPrecision=Decimal(symbol['baseAssetPrecision']),
-                quotePrecision=Decimal(symbol['quotePrecision']),
-            )
-            for filtr in symbol['filters']:
-                if filtr['filterType'] == 'PRICE_FILTER':
-                    row['tickSize'] = Decimal(filtr['tickSize'])
-                elif filtr['filterType'] == 'LOT_SIZE':
-                    row['maxQty'] = Decimal(filtr['maxQty'])
-                    row['minQty'] = Decimal(filtr['minQty'])
-                    row['stepSize'] = Decimal(filtr['stepSize'])
-                elif filtr['filterType'] == 'MIN_NOTIONAL':
-                    row['minNotional'] = Decimal(filtr['notional'])
-            async with self.market_lock:
+        async with self.market_lock:
+            # clear an old market info
+            mask = self.market_info['market'] != market
+            self.market_info = self.market_info[mask]
+            # add a new market info
+            for symbol in raw_data['symbols']:
+                row = dict(
+                    market=market,
+                    symbol=symbol['symbol'],
+                    status=symbol['status'],
+                    baseAsset=symbol['baseAsset'],
+                    quoteAsset=symbol['quoteAsset'],
+                    pricePrecision=Decimal(symbol['pricePrecision']),
+                    quantityPrecision=Decimal(symbol['quantityPrecision']),
+                    baseAssetPrecision=Decimal(symbol['baseAssetPrecision']),
+                    quotePrecision=Decimal(symbol['quotePrecision']),
+                )
+                for filtr in symbol['filters']:
+                    if filtr['filterType'] == 'PRICE_FILTER':
+                        row['tickSize'] = Decimal(filtr['tickSize'])
+                    elif filtr['filterType'] == 'LOT_SIZE':
+                        row['maxQty'] = Decimal(filtr['maxQty'])
+                        row['minQty'] = Decimal(filtr['minQty'])
+                        row['stepSize'] = Decimal(filtr['stepSize'])
+                    elif filtr['filterType'] == 'MIN_NOTIONAL':
+                        row['minNotional'] = Decimal(filtr['notional'])
+
                 self.market_info = update_or_insert(
                     self.market_info, row, ['market', 'symbol'])
-                # self.market_info.to_csv('market_info.csv', index=False)
+                self.market_info.to_csv('market_info.csv', index=False)
 
     async def update_market_info(self, market: str) -> None:
         """The function updates market info"""
         while not self.stop.is_set():
             await self.get_market_info(market)
             await asyncio.sleep(60 * 60)  # one hour
-    
+
     async def run_strategy(self, strategy: Strategy) -> None:
         """Function runs an infinity loop for every strategy"""
         logger.info(
@@ -581,7 +606,7 @@ class BaseBot:
 
         # run user data stream
         tasks.append(asyncio.create_task(
-            run_user_data_stream(self.user_data_handler, self.stop)))
+            run_user_data_stream(self.user_data_handler, self.stop, 'um-futures-cross')))
 
         # run strategies
         for strategy in self.strategies:
