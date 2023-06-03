@@ -131,6 +131,19 @@ class BaseBot:
         self.market_info: pd.DataFrame = pd.DataFrame(
             [], columns=market_info_cols)
         logger.info('****** Trade BOT ******')
+    
+    @staticmethod
+    def error_handler(func):
+        async def wrapper(self, *args, **kwargs):
+            while not self.stop.is_set():
+                try:
+                    return await func(self, *args, **kwargs)
+                except Exception as e:
+                    error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+                    error_message += traceback.format_exc()
+                    logger.critical(error_message)
+                    await asyncio.sleep(3000)
+        return wrapper
 
     @staticmethod
     def shrink_klines(df: pd.DataFrame, strategy: Strategy) -> pd.DataFrame:
@@ -255,32 +268,27 @@ class BaseBot:
             balances = self.balances[mask].iloc[0]
         return balances
 
+    @error_handler
     async def update_open_orders(self, strategy: Strategy) -> None:
-        try:
-            orders = await get_open_orders(strategy.symbol)
-            primary_keys = ['market', 'symbol', 'id']
-            async with self.orders_lock:
-                for order in orders:
-                    row = dict(
-                        market=strategy.market,
-                        symbol=strategy.symbol,
-                        side=order['side'],
-                        type=order['type'],
-                        quantity=Decimal(order['origQty']),
-                        price=Decimal(order['price']),
-                        average_price=Decimal(order['avgPrice']),
-                        status=order['status'],
-                        id=order['orderId'],
-                        client_id=order['clientOrderId'],
-                        trade_time=pd.to_datetime(order['time'], unit='ms'),
-                    )
-                    self.orders = update_or_insert(self.orders, row, primary_keys)
-                self.orders.to_csv('orders.csv', index=False)
-        except Exception as e:
-            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
-            error_message += traceback.format_exc()
-            logger.critical(error_message)
-            raise e
+        orders = await get_open_orders(strategy.symbol)
+        primary_keys = ['market', 'symbol', 'id']
+        async with self.orders_lock:
+            for order in orders:
+                row = dict(
+                    market=strategy.market,
+                    symbol=strategy.symbol,
+                    side=order['side'],
+                    type=order['type'],
+                    quantity=Decimal(order['origQty']),
+                    price=Decimal(order['price']),
+                    average_price=Decimal(order['avgPrice']),
+                    status=order['status'],
+                    id=order['orderId'],
+                    client_id=order['clientOrderId'],
+                    trade_time=pd.to_datetime(order['time'], unit='ms'),
+                )
+                self.orders = update_or_insert(self.orders, row, primary_keys)
+            self.orders.to_csv('orders.csv', index=False)
 
     async def last_price(self, market: str, symbol: str) -> Decimal:
         """The function returns a last price of market/symbol
@@ -378,7 +386,6 @@ class BaseBot:
             error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
             error_message += traceback.format_exc()
             logger.critical(error_message)
-            raise e
 
 
     async def tick_handler(self, strategy: Strategy, data: dict) -> None:
@@ -431,54 +438,48 @@ class BaseBot:
             error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
             error_message += traceback.format_exc()
             logger.critical(error_message)
-            raise e
 
+    @error_handler
     async def update_accaunt_info(self, market: str) -> None:
         """The function update account info for a specific market.
 
         Args:
             market (str): market name
         """
-        try:
-            info: dict = await get_account_info()
-            # update balances
-            async with self.balances_lock:
-                for asset in info['assets']:
-                    primary_keys = ['market', 'asset']
-                    row = dict(
-                        market=market,
-                        asset=asset['asset'],
-                        wb=Decimal(asset['walletBalance']),
-                        cw=Decimal(asset['crossWalletBalance']),
-                        ab=Decimal(asset['availableBalance']),
-                    )
-                    self.balances = update_or_insert(
-                        self.balances, row, primary_keys)
-                self.balances.to_csv('balances.csv', index=False)
+        info: dict = await get_account_info()
+        # update balances
+        async with self.balances_lock:
+            for asset in info['assets']:
+                primary_keys = ['market', 'asset']
+                row = dict(
+                    market=market,
+                    asset=asset['asset'],
+                    wb=Decimal(asset['walletBalance']),
+                    cw=Decimal(asset['crossWalletBalance']),
+                    ab=Decimal(asset['availableBalance']),
+                )
+                self.balances = update_or_insert(
+                    self.balances, row, primary_keys)
+            self.balances.to_csv('balances.csv', index=False)
 
-            # update positions
-            async with self.positions_lock:
-                for position in info['positions']:
-                    amount = Decimal(position['positionAmt'])
-                    if float(position['entryPrice']) == 0 or abs(amount) <= 0.0000001 :
-                        continue
-                    primary_keys = ['symbol']
-                    row = dict(
-                        market=market,
-                        symbol=position['symbol'],
-                        amount=amount,
-                        entry_price=Decimal(position['entryPrice']),
-                        pnl=Decimal(position['unrealizedProfit']),
-                        side='BUY' if amount >= 0 else 'SELL',
-                    )
-                    self.positions = update_or_insert(
-                        self.positions, row, primary_keys)
-                self.positions.to_csv('positions.csv', index=False)
-        except Exception as e:
-            error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
-            error_message += traceback.format_exc()
-            logger.critical(error_message)
-            raise e
+        # update positions
+        async with self.positions_lock:
+            for position in info['positions']:
+                amount = Decimal(position['positionAmt'])
+                if float(position['entryPrice']) == 0 or abs(amount) <= 0.0000001 :
+                    continue
+                primary_keys = ['symbol']
+                row = dict(
+                    market=market,
+                    symbol=position['symbol'],
+                    amount=amount,
+                    entry_price=Decimal(position['entryPrice']),
+                    pnl=Decimal(position['unrealizedProfit']),
+                    side='BUY' if amount >= 0 else 'SELL',
+                )
+                self.positions = update_or_insert(
+                    self.positions, row, primary_keys)
+            self.positions.to_csv('positions.csv', index=False)
 
     async def on_tick(self, strategy: Strategy, klines: pd.DataFrame, is_kline_closed: bool):
         """ Not implemented stategy handler
@@ -490,6 +491,7 @@ class BaseBot:
         """
         raise NotImplementedError
 
+    @error_handler
     async def download_klines(self, strategy: Strategy) -> None:
         """Function download and preprocess raw klines from Binance"""
         klines_raw = await get_klines(strategy.symbol, strategy.tf, self.stop, limit=strategy.window)
@@ -504,7 +506,8 @@ class BaseBot:
         primary_keys = ['market', 'symbol', 'tf', 'open_time']
         async with self.klines_lock:
             self.klines = update_or_insert(self.klines, df, primary_keys)
-
+        
+    @error_handler
     async def get_market_info(self, market: str) -> None:
         if market == 'um-futures-cross' or market == 'um-futures':
             raw_data = await get_market_info(self.stop)
@@ -540,15 +543,8 @@ class BaseBot:
     async def update_market_info(self, market: str) -> None:
         """The function updates market info"""
         while not self.stop.is_set():
-            try:
-                await self.get_market_info(market)
-            except ValueError as ex:
-                logger.critical(ex)
-                raise ex
-            except Exception as ex:
-                logger.error(ex)
-            finally:
-                await asyncio.sleep(60 * 60)  # one hour
+            await self.get_market_info(market)
+            await asyncio.sleep(60 * 60)  # one hour
     
     async def run_strategy(self, strategy: Strategy) -> None:
         """Function runs an infinity loop for every strategy"""
