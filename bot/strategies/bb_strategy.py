@@ -30,11 +30,11 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     tick = df.iloc[-1]
     await asyncio.gather(
         bot.update_accaunt_info(strategy.market),
-        bot.update_open_orders(strategy),
+        # bot.update_open_orders(strategy),
     )
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
 
-    # close orders
+    # cancel openned orders
     orders: pd.DataFrame = await bot.get_open_orders(strategy)
     for i, row in orders.iterrows():
         if await bot.cancel_order(strategy, row['id']):
@@ -44,12 +44,11 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     for i, row in positions.iterrows():
         if (row['side'] == 'BUY' and price > tick['bb_middle']) \
                 or (row['side'] == 'SELL' and price < tick['bb_middle']):
-            log_info(f'positions {positions}') # debug
             if await bot.close_position(row, price):
                 pnl = calculate_pnl(row['entry_price'], price, row['amount'])
                 log_info(f"Try to close {row['side']} position at {price}. PNL {round(pnl, 2)}")
 
-    # open new order
+    # open a new order
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
     balance = await bot.get_balance(strategy)
 
