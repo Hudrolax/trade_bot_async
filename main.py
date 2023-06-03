@@ -43,18 +43,18 @@ async def main():
                 risk=30,
             )
         ),
-        dict(
-            name='bb',
-            market='um-futures-cross',
-            symbol='QNTUSDT',
-            tf='15m',
-            window=100,
-            params=dict(
-                bb_period=20,
-                bb_dev=1.9,
-                risk=30,
-            )
-        ),
+        # dict(
+        #     name='bb',
+        #     market='um-futures-cross',
+        #     symbol='QNTUSDT',
+        #     tf='15m',
+        #     window=100,
+        #     params=dict(
+        #         bb_period=20,
+        #         bb_dev=1.9,
+        #         risk=30,
+        #     )
+        # ),
         dict(
             name='bb',
             market='um-futures-cross',
