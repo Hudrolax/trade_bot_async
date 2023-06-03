@@ -48,7 +48,6 @@ async def unauthorizrd_request(
     Returns:
         dict: parsed JSON response
     """
-    params['recvWindow'] = 50000
     for _ in range(5):  # do 5 attempts
         if stop.is_set():
             raise asyncio.CancelledError
@@ -100,7 +99,6 @@ async def authorized_request(
     signature = hmac.new(str(SECRET_KEY).encode(),
                          query_string.encode(), hashlib.sha256).hexdigest()
     params["signature"] = signature
-    params['recvWindow'] = 50000
 
     headers = {
         "X-MBX-APIKEY": API_KEY
@@ -180,6 +178,7 @@ async def open_order(
             del kwargs['timeInForce']
 
         params = {
+            "recvWindow": 50000,
             "symbol": symbol,
             "side": side,
             "quantity": str(quantity) if quantity >= 0 else str(abs(quantity)),
@@ -219,6 +218,7 @@ async def cancel_order(symbol: str, order_id: int = -1, origClientOrderId: str =
 
     try:
         params = {
+            "recvWindow": 50000,
             "symbol": symbol,
             "orderId": order_id,
             "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
@@ -252,6 +252,7 @@ async def cancel_all_orders(symbol: str, **kwargs) -> bool:
     """
     logger = logging.getLogger('cancel_all_orders')
     params = {
+        "recvWindow": 50000,
         "symbol": symbol,
         "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
         **kwargs
