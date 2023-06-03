@@ -48,6 +48,7 @@ async def unauthorizrd_request(
     Returns:
         dict: parsed JSON response
     """
+    params['recvWindow'] = 50000
     for _ in range(5):  # do 5 attempts
         if stop.is_set():
             raise asyncio.CancelledError
@@ -99,6 +100,7 @@ async def authorized_request(
     signature = hmac.new(str(SECRET_KEY).encode(),
                          query_string.encode(), hashlib.sha256).hexdigest()
     params["signature"] = signature
+    params['recvWindow'] = 50000
 
     headers = {
         "X-MBX-APIKEY": API_KEY
