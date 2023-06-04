@@ -255,7 +255,8 @@ class BaseBot:
         """The function return open orders for the strategy from dataframe"""
         async with self.orders_lock:
             mask = (self.orders['market'] == strategy.market) & (
-                self.orders['symbol'] == strategy.symbol) & (self.orders['status'] == 'NEW')
+                self.orders['symbol'] == strategy.symbol) & (
+                (self.orders['status'] == 'NEW') | (self.orders['startus'] == 'PARTIALLY_FILLED'))
             return self.orders[mask].copy()
 
     async def get_balance(self, strategy: Strategy) -> pd.Series:
@@ -373,7 +374,8 @@ class BaseBot:
 
                     # del closed positions
                     indexes = self.positions[self.positions['amount'] == 0].index
-                    self.positions = self.positions.drop(indexes).reset_index(drop=True)
+                    self.positions = self.positions.drop(
+                        indexes).reset_index(drop=True)
 
                     self.positions.to_csv('positions.csv', index=False)
 
