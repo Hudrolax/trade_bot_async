@@ -256,7 +256,7 @@ class BaseBot:
         async with self.orders_lock:
             mask = (self.orders['market'] == strategy.market) & (
                 self.orders['symbol'] == strategy.symbol) & (
-                (self.orders['status'] == 'NEW') | (self.orders['startus'] == 'PARTIALLY_FILLED'))
+                (self.orders['status'] == 'NEW') | (self.orders['status'] == 'PARTIALLY_FILLED'))
             return self.orders[mask].copy()
 
     async def get_balance(self, strategy: Strategy) -> pd.Series:
