@@ -36,13 +36,15 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
 
     # cancel openned orders
     orders: pd.DataFrame = await bot.get_open_orders(strategy)
-    print(f'orders: {orders}')
+    if len(orders) > 0:
+        print(f'orders: {orders}')
     for i, row in orders.iterrows():
         if await bot.cancel_order(strategy, row['id']):
             log_info(f"order {row['side']} {row['price']} was canceled.")
 
     # close positions
-    print(f'from strategy: {positions}')
+    if len(positions) > 0:
+        print(f'from strategy, positions: {positions}')
     for i, row in positions.iterrows():
         if (row['side'] == 'BUY' and price > tick['bb_middle']) \
                 or (row['side'] == 'SELL' and price < tick['bb_middle']):

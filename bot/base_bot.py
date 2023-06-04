@@ -369,13 +369,14 @@ class BaseBot:
                         )
                         self.positions = update_or_insert(
                             self.positions, row, primary_keys)
-                        logger.info(f"positions updated for {position['s']}")
-                        logger.info(f"positions: {self.positions}")
+                        print(f"positions updated for {position['s']}")
 
                     # del closed positions
                     indexes = self.positions[self.positions['amount'] == 0].index
                     self.positions = self.positions.drop(
                         indexes).reset_index(drop=True)
+                    
+                    print(f"positions: {self.positions}")
 
                     self.positions.to_csv('positions.csv', index=False)
 
@@ -398,6 +399,8 @@ class BaseBot:
                 async with self.orders_lock:
                     self.orders = update_or_insert(
                         self.orders, row, primary_keys)
+                    print(f"order for {order['s']} was updated")
+                    print(f'orders: {self.orders}')
                     self.orders.to_csv('orders.csv', index=False)
         except Exception as e:
             error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
