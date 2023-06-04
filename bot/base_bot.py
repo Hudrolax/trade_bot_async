@@ -331,12 +331,12 @@ class BaseBot:
             if data['e'] == "ACCOUNT_UPDATE":
                 # update balances
                 async with self.balances_lock:
+                    primary_keys = ['market', 'asset']
                     for asset in data['a']['B']:
                         mask = (
                             self.balances['market'] == market) & (self.balances['asset'] == asset['a'])
                         wb = Decimal(asset['wb'])
                         cw = Decimal(asset['cw'])
-                        primary_keys = ['market', 'asset']
                         old_ab = self.balances[mask].iloc[-1]['ab']
                         row = dict(
                             market=market,
@@ -352,12 +352,12 @@ class BaseBot:
 
                 # update positions
                 async with self.positions_lock:
+                    primary_keys = ['market', 'symbol']
                     for position in data['a']['P']:
                         # update changes
                         amount = Decimal(position['pa'])
                         entry_price = Decimal(position['ep'])
                         pnl = Decimal(position['up'])
-                        primary_keys = ['symbol']
                         row = dict(
                             market=market,
                             symbol=position['s'],
@@ -368,6 +368,8 @@ class BaseBot:
                         )
                         self.positions = update_or_insert(
                             self.positions, row, primary_keys)
+                        logger.info(f"positions updated for {position['s']}")
+                        logger.info(f"positions: {self.positions}")
 
                     # del closed positions
                     indexes = self.positions[self.positions['amount'] == 0].index
