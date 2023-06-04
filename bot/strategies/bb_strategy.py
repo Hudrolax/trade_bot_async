@@ -29,24 +29,27 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     price = await bot.last_price(strategy.market, strategy.symbol)
     tick = df.iloc[-1]
     await asyncio.gather(
-        bot.update_accaunt_info(strategy.market),
+        bot.update_accaunt_info(strategy.market), # for update available balance (with openned positions on cross account)
         # bot.update_open_orders(strategy),
     )
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
 
     # cancel openned orders
     orders: pd.DataFrame = await bot.get_open_orders(strategy)
+    print(f'orders: {orders}')
     for i, row in orders.iterrows():
         if await bot.cancel_order(strategy, row['id']):
             log_info(f"order {row['side']} {row['price']} was canceled.")
 
     # close positions
+    print(f'from strategy: {positions}')
     for i, row in positions.iterrows():
         if (row['side'] == 'BUY' and price > tick['bb_middle']) \
                 or (row['side'] == 'SELL' and price < tick['bb_middle']):
             if await bot.close_position(row, price):
                 pnl = calculate_pnl(row['entry_price'], price, row['amount'])
                 log_info(f"Try to close {row['side']} position at {price}. PNL {round(pnl, 2)}")
+                await asyncio.sleep(30) # wait 30 sec. Maybe i cat close pos on this candle and open new one?
 
     # open a new order
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
