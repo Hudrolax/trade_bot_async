@@ -4,6 +4,9 @@ services:
   bot:
     build:
       context: .
+      args:
+        - DEV=${DEV}
+
     restart: always
     volumes:
       - .:/app
