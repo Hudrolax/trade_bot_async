@@ -15,56 +15,20 @@ async def main():
             window=100,
             params=dict(
                 bb_period=20,
-                bb_dev=2.0,
+                bb_dev=2.1,
                 risk=30,
             )
         ),
         dict(
             name='bb',
             market='um-futures-cross',
-            symbol='HFTUSDT',
+            symbol='USDCUSDT',
             tf='15m',
             window=100,
             params=dict(
                 bb_period=20,
-                bb_dev=1.8,
-                risk=30,
-            )
-        ),
-        dict(
-            name='bb',
-            market='um-futures-cross',
-            symbol='LQTYUSDT',
-            tf='15m',
-            window=100,
-            params=dict(
-                bb_period=20,
-                bb_dev=1.9,
-                risk=30,
-            )
-        ),
-        # dict(
-        #     name='bb',
-        #     market='um-futures-cross',
-        #     symbol='QNTUSDT',
-        #     tf='15m',
-        #     window=100,
-        #     params=dict(
-        #         bb_period=20,
-        #         bb_dev=1.9,
-        #         risk=30,
-        #     )
-        # ),
-        dict(
-            name='bb',
-            market='um-futures-cross',
-            symbol='MINAUSDT',
-            tf='15m',
-            window=100,
-            params=dict(
-                bb_period=20,
-                bb_dev=20,
-                risk=30,
+                bb_dev=2.4,
+                risk=50,
             )
         ),
     ]

@@ -20,7 +20,7 @@ indicator_func = {
     'obv': obv,
 }
 
-def count_zeros_after_decimal(value):
+def count_zeros_after_decimal(value: float | int | str | Decimal) -> int:
     if isinstance(value, float):
         value = Decimal.from_float(value)
     elif isinstance(value, int):
@@ -37,10 +37,11 @@ def count_zeros_after_decimal(value):
     if exponent < 0:
         zeros_count = abs(exponent) - 1
 
-    return zeros_count
+    return int(zeros_count)
 
 
-def float_to_decimal(value: Decimal | float, decimal_places):
+def float_to_decimal(value: Decimal | float, decimal_places: int) -> Decimal:
+    decimal_places = int(decimal_places)
     decimal_value = Decimal(value)
     rounding = Decimal(10) ** (-decimal_places)
     return decimal_value.quantize(rounding, ROUND_HALF_UP)

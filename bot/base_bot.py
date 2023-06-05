@@ -2,6 +2,7 @@ import traceback
 import asyncio
 import signal
 import pandas as pd
+import numpy as np
 import logging
 from bot.binance_um_futures import (
     wss_klines,
@@ -93,8 +94,8 @@ def change_type_df(df: pd.DataFrame) -> pd.DataFrame:
     """The function normalizes the value types in the dataframe."""
     # change to decimal types
     for col in ['open', 'high', 'low', 'close', 'vol', 'qa_vol']:
-        if col in df.columns and df[col].dtype != Decimal:
-            df[col] = df[col].astype(Decimal)
+        if col in df.columns and df[col].dtype != float:
+            df[col] = df[col].astype(float)
 
     # change int types
     for col in ['trades']:
@@ -124,6 +125,7 @@ class BaseBot:
 
         self.klines: pd.DataFrame = pd.DataFrame(
             [], columns=[*klines_cols, *addition_klines_cols])
+        self.klines = change_type_df(self.klines)
 
         self.balances: pd.DataFrame = pd.DataFrame([], columns=balances_cols)
         self.positions: pd.DataFrame = pd.DataFrame([], columns=positions_cols)
@@ -161,19 +163,26 @@ class BaseBot:
         """Handler for stop signal"""
         logger.info('Received stop signal')
         self.stop.set()
+    
+    async def prepare_price(self, price: int | float, strategy: Strategy) -> Decimal:
+        async with self.market_lock:
+            mask = (self.market_info['market'] == strategy.market) & (
+                self.market_info['symbol'] == strategy.symbol)
+            market_info = self.market_info[mask].iloc[0]
+            price_precision = market_info['pricePrecision']
+            return float_to_decimal(price, price_precision)
 
     async def prepare_quantity(self, value: int | float, strategy: Strategy, price: Decimal):
         async with self.market_lock:
             mask = (self.market_info['market'] == strategy.market) & (
                 self.market_info['symbol'] == strategy.symbol)
             market_info = self.market_info[mask].iloc[0]
-            step = market_info['stepSize']
+            step = market_info['quantityPrecision']
             min_notional = market_info['minNotional']
 
-        digits_after_zero = count_zeros_after_decimal(step)
-        quantity = float_to_decimal(value, digits_after_zero)
+        quantity = float_to_decimal(value, step)
         min_notional_in_base_asset = float_to_decimal(
-            float(min_notional) / float(price), digits_after_zero)
+            float(min_notional) / float(price), step)
         if quantity < min_notional_in_base_asset:
             quantity = min_notional_in_base_asset
         return quantity
@@ -183,7 +192,11 @@ class BaseBot:
         async with self.market_lock:
             mask = (self.market_info['market'] == strategy.market) & (
                 self.market_info['symbol'] == strategy.symbol)
-            market_info = self.market_info[mask].iloc[0]
+            market_info = self.market_info[mask]
+            if len(market_info) == 0:
+                raise ValueError(
+                    f'Have no market info for market/symbol {strategy.market}/{strategy.symbol}')
+            market_info = market_info.iloc[0]
             return market_info['quoteAsset']
 
     async def open_order(
@@ -191,11 +204,13 @@ class BaseBot:
         strategy: Strategy,
         side: str,
         quantity: Decimal,
-        price: Decimal,
+        price: Decimal | float,
         order_type: str = 'LIMIT',
     ) -> bool:
         """The function opens a new one order."""
         try:
+            if isinstance(price, float):
+                price = await self.prepare_price(price, strategy)
             await open_order(strategy.symbol, side, quantity, price, order_type)
         except OpenOrderError:
             return False
@@ -290,8 +305,8 @@ class BaseBot:
                     side=order['side'],
                     type=order['type'],
                     quantity=Decimal(order['origQty']),
-                    price=Decimal(order['price']),
-                    average_price=Decimal(order['avgPrice']),
+                    price=float(order['price']),
+                    average_price=float(order['avgPrice']),
                     status=order['status'],
                     id=order['orderId'],
                     client_id=order['clientOrderId'],
@@ -300,7 +315,7 @@ class BaseBot:
                 self.orders = update_or_insert(self.orders, row, primary_keys)
             self.orders.to_csv('orders.csv', index=False)
 
-    async def last_price(self, market: str, symbol: str) -> Decimal:
+    async def last_price(self, market: str, symbol: str) -> float:
         """The function returns a last price of market/symbol
 
         Args:
@@ -308,7 +323,7 @@ class BaseBot:
             symbol (str): symbol name
 
         Returns:
-            Decimal: last price
+            float: last price
         """
         logger = logging.getLogger('last_price')
         async with self.klines_lock:
@@ -357,8 +372,8 @@ class BaseBot:
                     for position in data['a']['P']:
                         # update changes
                         amount = Decimal(position['pa'])
-                        entry_price = Decimal(position['ep'])
-                        pnl = Decimal(position['up'])
+                        entry_price = float(position['ep'])
+                        pnl = float(position['up'])
                         row = dict(
                             market=market,
                             symbol=position['s'],
@@ -375,7 +390,7 @@ class BaseBot:
                     indexes = self.positions[self.positions['amount'] == 0].index
                     self.positions = self.positions.drop(
                         indexes).reset_index(drop=True)
-                    
+
                     logger.info(f"positions: {self.positions}")
 
                     self.positions.to_csv('positions.csv', index=False)
@@ -388,8 +403,8 @@ class BaseBot:
                     side=order['S'],
                     type=order['o'],
                     quantity=Decimal(order['q']),
-                    price=Decimal(order['p']),
-                    average_price=Decimal(order['ap']),
+                    price=float(order['p']),
+                    average_price=float(order['ap']),
                     status=order['X'],
                     id=order['i'],
                     client_id=order['c'],
@@ -427,12 +442,12 @@ class BaseBot:
                 market=market,
                 open_time=pd.to_datetime(kline['t'], unit='ms'),
                 close_time=pd.to_datetime(kline['T'], unit='ms'),
-                open=Decimal(kline['o']),
-                high=Decimal(kline['h']),
-                low=Decimal(kline['l']),
-                close=Decimal(kline['c']),
-                vol=Decimal(kline['v']),
-                qa_vol=Decimal(kline['q']),
+                open=float(kline['o']),
+                high=float(kline['h']),
+                low=float(kline['l']),
+                close=float(kline['c']),
+                vol=float(kline['v']),
+                qa_vol=float(kline['q']),
                 trades=int(kline['n']),
             )
             primary_keys = ['symbol', 'tf', 'market', 'open_time']
@@ -492,7 +507,7 @@ class BaseBot:
             self.positions = self.positions[mask]
             # add new positions
             for position in info['positions']:
-                amount = Decimal(position['positionAmt'])
+                amount = float(position['positionAmt'])
                 if float(position['entryPrice']) == 0 or abs(amount) <= 0.0000001:
                     continue
                 primary_keys = ['market', 'symbol']
@@ -500,8 +515,8 @@ class BaseBot:
                     market=market,
                     symbol=position['symbol'],
                     amount=amount,
-                    entry_price=Decimal(position['entryPrice']),
-                    pnl=Decimal(position['unrealizedProfit']),
+                    entry_price=float(position['entryPrice']),
+                    pnl=float(position['unrealizedProfit']),
                     side='BUY' if amount >= 0 else 'SELL',
                 )
                 self.positions = update_or_insert(
@@ -529,7 +544,6 @@ class BaseBot:
         df['symbol'] = strategy.symbol
         df['tf'] = strategy.tf
         df['market'] = strategy.market
-        df = change_type_df(df)
         primary_keys = ['market', 'symbol', 'tf', 'open_time']
         async with self.klines_lock:
             self.klines = update_or_insert(self.klines, df, primary_keys)
@@ -553,20 +567,20 @@ class BaseBot:
                     status=symbol['status'],
                     baseAsset=symbol['baseAsset'],
                     quoteAsset=symbol['quoteAsset'],
-                    pricePrecision=Decimal(symbol['pricePrecision']),
-                    quantityPrecision=Decimal(symbol['quantityPrecision']),
-                    baseAssetPrecision=Decimal(symbol['baseAssetPrecision']),
-                    quotePrecision=Decimal(symbol['quotePrecision']),
+                    pricePrecision=float(symbol['pricePrecision']),
+                    quantityPrecision=float(symbol['quantityPrecision']),
+                    baseAssetPrecision=float(symbol['baseAssetPrecision']),
+                    quotePrecision=float(symbol['quotePrecision']),
                 )
                 for filtr in symbol['filters']:
                     if filtr['filterType'] == 'PRICE_FILTER':
-                        row['tickSize'] = Decimal(filtr['tickSize'])
+                        row['tickSize'] = float(filtr['tickSize'])
                     elif filtr['filterType'] == 'LOT_SIZE':
-                        row['maxQty'] = Decimal(filtr['maxQty'])
-                        row['minQty'] = Decimal(filtr['minQty'])
-                        row['stepSize'] = Decimal(filtr['stepSize'])
+                        row['maxQty'] = float(filtr['maxQty'])
+                        row['minQty'] = float(filtr['minQty'])
+                        row['stepSize'] = float(filtr['stepSize'])
                     elif filtr['filterType'] == 'MIN_NOTIONAL':
-                        row['minNotional'] = Decimal(filtr['notional'])
+                        row['minNotional'] = float(filtr['notional'])
 
                 self.market_info = update_or_insert(
                     self.market_info, row, ['market', 'symbol'])

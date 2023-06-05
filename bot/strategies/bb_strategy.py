@@ -5,6 +5,7 @@ import pandas as pd
 import logging
 from typing import Any
 import asyncio
+from decimal import Decimal
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,8 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
 
     # get info
     quote_asset = await bot.get_quote_asset(strategy)
-    price = await bot.last_price(strategy.market, strategy.symbol)
+    price_float: float = await bot.last_price(strategy.market, strategy.symbol)
+    price: Decimal = await bot.prepare_price(price_float, strategy)
     tick = df.iloc[-1]
     await asyncio.gather(
         bot.update_accaunt_info(strategy.market), # for update available balance (with openned positions on cross account)
@@ -36,8 +38,6 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
 
     # cancel openned orders
     orders: pd.DataFrame = await bot.get_open_orders(strategy)
-    if len(orders) > 0:
-        print(f'orders: {orders}')
     for i, row in orders.iterrows():
         if await bot.cancel_order(strategy, row['id']):
             log_info(f"order {row['side']} {row['price']} was canceled.")
