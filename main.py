@@ -26,7 +26,7 @@ async def main():
             tf='15m',
             window=100,
             params=dict(
-                bb_period=60,
+                bb_period=20,
                 bb_dev=2,
                 risk=50,
             )
