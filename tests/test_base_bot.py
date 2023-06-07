@@ -6,7 +6,28 @@ from bot.base_bot import (
     update_or_insert,
     BaseBot,
 )
+from bot.strategies.preprocessing import count_significant_digits
 import pandas as pd
+
+def test_count_significant_digits() -> None:
+    """Testing counting significant digits after the dot."""
+    assert count_significant_digits(5) == 0
+    assert count_significant_digits("5") == 0
+    assert count_significant_digits(Decimal(5)) == 0
+    assert count_significant_digits(Decimal("5")) == 0
+    assert count_significant_digits(Decimal("5.0")) == 0
+    assert count_significant_digits(Decimal(5.0)) == 0
+    assert count_significant_digits(0.1 + 0.2) == 1
+    assert count_significant_digits(Decimal(0.1 + 0.2)) == 1
+    assert count_significant_digits(0.00001) == 5
+    assert count_significant_digits("0.00001") == 5
+    assert count_significant_digits(Decimal("0.00001")) == 5
+    assert count_significant_digits(Decimal(0.00001)) == 5
+    assert count_significant_digits(0.0000100) == 5
+    assert count_significant_digits("0.0000100") == 5
+    assert count_significant_digits(Decimal("0.0000100")) == 5
+    assert count_significant_digits(Decimal(0.0000100)) == 5
+
 
 def test_invert_side():
     assert invert_side('BUY') == 'SELL'
@@ -58,7 +79,7 @@ async def test_bot(bot):
     # market info tests
     quote_asset = await bot.get_quote_asset(strategy)
     assert quote_asset == 'USDT'
-    assert await bot.prepare_price(0.777777000000003, strategy) == Decimal('0.777777')
+    assert await bot.prepare_price(0.777777000000003, strategy) == Decimal('0.7778')
     assert await bot.prepare_quantity(54.3000000000000003, strategy, Decimal('0.815400')) == Decimal('54.3')
 
 
