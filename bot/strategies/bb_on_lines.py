@@ -45,6 +45,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
     )
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
     balance = await bot.get_balance(strategy)
+    sum_amount = positions['amount'].sum()
 
     max_quantity = await bot.prepare_quantity(
         float(balance['ab']) * risk / 100,
@@ -52,27 +53,10 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
         price,
     )
 
-    # cancel openned orders
-    orders: pd.DataFrame = await bot.get_open_orders(strategy)
-
-    tasks = []
-    for _, row in orders.iterrows():
-        if '_close' in row['client_id']:
-            log_info(f"Cancel the middle-order with id {row['id']}")
-        elif '_new' in row['client_id'] and row['side'] == 'BUY':
-            log_info(f'Cancel the BUY order with id {row["id"]}')
-        elif '_new' in row['client_id'] and row['side'] == 'SELL':
-            log_info(f'Cancel the SELL order with id {row["id"]}')
-        tasks.append(asyncio.create_task(
-            bot.cancel_order(strategy, row['id'])))
-
-    # open orders
-    positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
-    orders: pd.DataFrame = await bot.get_open_orders(strategy)
-    sum_amount = positions['amount'].sum()
-
+    # defina orders plan
+    orders_plan = dict()
+    # middle order
     if abs(sum_amount) > 0:
-        # open order for closing exists position
         middle_price = await bot.prepare_price(tick['bb_middle'], strategy)
         quantity = await bot.prepare_quantity(
             abs(sum_amount),
@@ -80,14 +64,10 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
             middle_price,
         )
         side = 'BUY' if sum_amount < 0 else 'SELL'
-        tasks.append(asyncio.create_task(
-            bot.open_order(strategy, side, quantity, middle_price,
-                           newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_close'),
-        ))
-        log_info(f'position amount: {sum_amount}')
-        log_info(
-            f'open a middle-order to close the position: side {side} amount {quantity} price {middle_price}')
+        orders_plan['middle'] = dict(
+            price=middle_price, quantity=quantity, side=side)
 
+    # lower/upper
     if abs(sum_amount) < max_quantity:
         lower_price = await bot.prepare_price(tick['bb_lower'], strategy)
         upper_price = await bot.prepare_price(tick['bb_upper'], strategy)
@@ -106,14 +86,64 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
             strategy,
             upper_price,
         )
+        orders_plan['upper'] = dict(
+            price=upper_price, quantity=quantity_sell, side='SELL')
+        orders_plan['lower'] = dict(
+            price=lower_price, quantity=quantity_buy, side='BUY')
 
-        result = await asyncio.gather(
-            bot.open_order(strategy, 'BUY', quantity_buy, lower_price,
-                           newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_new'),
-            bot.open_order(strategy, 'SELL', quantity_sell,
-                           upper_price, newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_new'),
-        )
-        if result[0]:
-            log_info(f"BUY on {lower_price} ({quantity_buy}) {quote_asset}")
-        if result[1]:
-            log_info(f'SELL on {upper_price} ({quantity_sell}) {quote_asset}')
+    orders: pd.DataFrame = await bot.get_open_orders(strategy)
+
+    tasks = []
+    def handle_order(tasks: list,o_name:str, row: pd.Series):
+        if o_name in orders_plan.keys():
+            # modify, is needed
+            price_diff = float(row['price']) - float(orders_plan[o_name]['price'])
+            if float(price_diff) / float(orders_plan[o_name]['price']) > 0.005 \
+                or row['quantity'] != orders_plan[o_name]['quantity']:
+                tasks.append(asyncio.create_task(
+                    bot.modify_order(row['id'], strategy, **orders_plan[o_name])
+                ))
+                log_info(f"{o_name} order {row['side']} id {row['id']} is modified.")
+            else:
+                log_info(f"Order {o_name} {row['side']} might be stay on the place.")
+        else: # cancel the order
+            tasks.append(asyncio.create_task(
+                bot.cancel_order(strategy, row['id'])))
+            log_info(
+                f'Cancel the {o_name} {row["side"]} order with id {row["id"]}')
+        # delete from plan (not open a new one)
+        del orders_plan[o_name]
+
+    for _, row in orders.iterrows():
+        if '_close' in row['client_id']:
+            handle_order(tasks, 'middle', row)
+        elif '_upper' in row['client_id']:
+            handle_order(tasks, 'upper', row)
+        elif '_lower' in row['client_id']:
+            handle_order(tasks, 'lower', row)
+        else:
+            tasks.append(asyncio.create_task(
+                bot.cancel_order(strategy, row['id'])))
+            log_info(
+                f'Cancel unknown {row["side"]} order with id {row["client_id"]}')
+
+    await asyncio.gather(*tasks)
+
+    # open new orders
+    tasks = []
+    for key in orders_plan.keys():
+        if key == 'upper':
+            tasks.append(asyncio.create_task(
+                bot.open_order(strategy=strategy, **orders_plan[key], newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_upper')
+            ))
+            log_info(f"Open a new upper order {orders_plan[key]['side']}")
+        if key == 'lower':
+            tasks.append(asyncio.create_task(
+                bot.open_order(strategy=strategy, **orders_plan[key], newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_lower')
+            ))
+            log_info(f"Open a new lower order {orders_plan[key]['side']}")
+        elif key == 'middle':
+            tasks.append(asyncio.create_task(
+                bot.open_order(strategy=strategy, **orders_plan[key], newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_close')
+            ))
+            log_info(f"Open a new middle order {orders_plan[key]['side']}")
