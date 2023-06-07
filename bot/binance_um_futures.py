@@ -143,12 +143,64 @@ async def get_account_info(**kwargs) -> dict:
     return response
 
 
+async def modify_order(
+    order_id: int,
+    symbol: str,
+    side: str,
+    quantity: Decimal,
+    price: Decimal,
+    origClientOrderId:str = '',
+    **kwargs
+) -> dict:
+    """The function modify the order
+
+    Args:
+        order_id (int): id of modifing order
+        symbol (str): Symbol, like BTCUSDT
+        side (str): BUY or SELL
+        quantity (Decimal): Quantity on base asset. For BTCUSDT it's amount of BTC
+        price (Decimal | None): price in quote asset. For BTCUSDT it's price in USDT. None - if type is None
+        origClientOrderId (str): client side order ID
+        order_type (str, optional): ORDER type. See types in official Binance documentation. Defaults to 'LIMIT'.
+        **kwargs: option kwargs. See official Binance documentation.
+
+    Returns:
+        dict: parsed JSON response
+    """
+    logger = logging.getLogger('modify_order')
+    try:
+        params = {
+            "orderId": order_id,
+            "origClientOrderId": origClientOrderId,
+            "symbol": symbol,
+            "side": side,
+            "quantity": str(quantity) if quantity >= 0 else str(abs(quantity)),
+            "price": str(price),
+            "recvWindow": 50000,
+            "timestamp": int(time.time() * 1000),  # Timestamp in milliseconds
+            **kwargs
+        }
+        response = await authorized_request(FUTURES_ORDER_URL, 'put', params, OpenOrderError, logger)
+    except Exception as e:
+        error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+        error_message += traceback.format_exc()
+        logger.critical(error_message)
+        raise e
+
+    if not isinstance(response, dict):
+        logger.error(f'Response not a dict. Response type {type(response)}')
+        raise OpenOrderError(
+            f'Response not a dict. Response type {type(response)}')
+    return response
+
+
 async def open_order(
     symbol: str,
     side: str,
     quantity: Decimal,
     price: Decimal | None = None,
     order_type: str = 'LIMIT',
+    newClientOrderId: str = '',
     **kwargs
 ) -> dict:
     """The function opens an order
@@ -176,6 +228,9 @@ async def open_order(
         if order_type == 'MARKET':
             del kwargs['price']
             del kwargs['timeInForce']
+        
+        if newClientOrderId != '':
+            kwargs['newClientOrderId'] = newClientOrderId
 
         params = {
             "recvWindow": 50000,

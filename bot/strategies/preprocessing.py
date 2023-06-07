@@ -1,6 +1,6 @@
 import pandas as pd
 import copy
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP, InvalidOperation, getcontext
 from .indicators import (
     bollinger_bands,
     rsi,
@@ -20,24 +20,32 @@ indicator_func = {
     'obv': obv,
 }
 
-def count_zeros_after_decimal(value: float | int | str | Decimal) -> int:
-    if isinstance(value, float):
-        value = Decimal.from_float(value)
-    elif isinstance(value, int):
-        value = Decimal(value)
-    elif isinstance(value, str):
-        value = Decimal(value)
-    elif not isinstance(value, Decimal):
-        raise ValueError("Неподдерживаемый тип значения")
+getcontext().prec = 10 # Set precision of Decimal to maximum for float64
 
-    decimal_tuple = value.as_tuple()
-    exponent = decimal_tuple.exponent
-    zeros_count = 0
+def count_significant_digits(n):
+    if isinstance(n, int):
+        return 0
+    elif isinstance(n, float):
+        # We limit the precision to 10 digits after the dot.
+        n_str = f'{n:.10f}'.rstrip('0').rstrip('.')
+    elif isinstance(n, str):
+        try:
+            # Attempt to convert string to Decimal for better precision handling
+            n = Decimal(n)
+            n_str = str(n.normalize())
+        except InvalidOperation:
+            # If the conversion fails (for example, due to a string like '0.1 + 0.2'),
+            # fall back to using the string as is
+            n_str = n
+    elif isinstance(n, Decimal):
+        n_str = str(n.normalize())
+    else:
+        raise TypeError("Unsupported type")
 
-    if exponent < 0:
-        zeros_count = abs(exponent) - 1
-
-    return int(zeros_count)
+    if '.' not in n_str:
+        return 0
+    else:
+        return len(n_str) - n_str.index('.') - 1
 
 
 def float_to_decimal(value: Decimal | float, decimal_places: int) -> Decimal:

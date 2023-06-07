@@ -13,11 +13,12 @@ from bot.binance_um_futures import (
     get_open_orders,
     open_order,
     cancel_order,
+    modify_order,
 )
 from bot.data_class import Strategy
 from bot.errors import OpenOrderError, CloseOrderError, TickHandleError
 from decimal import Decimal
-from .strategies.preprocessing import float_to_decimal, count_zeros_after_decimal
+from .strategies.preprocessing import float_to_decimal, count_significant_digits
 
 logger = logging.getLogger(__name__)
 
@@ -169,18 +170,18 @@ class BaseBot:
             mask = (self.market_info['market'] == strategy.market) & (
                 self.market_info['symbol'] == strategy.symbol)
             market_info = self.market_info[mask].iloc[0]
-            price_precision = market_info['pricePrecision']
+            price_precision = count_significant_digits(market_info['tickSize'])
             return float_to_decimal(price, price_precision)
 
-    async def prepare_quantity(self, value: int | float, strategy: Strategy, price: Decimal):
+    async def prepare_quantity(self, value: int | float | Decimal, strategy: Strategy, price: Decimal):
         async with self.market_lock:
             mask = (self.market_info['market'] == strategy.market) & (
                 self.market_info['symbol'] == strategy.symbol)
             market_info = self.market_info[mask].iloc[0]
-            step = market_info['quantityPrecision']
+            step = count_significant_digits(market_info['stepSize'])
             min_notional = market_info['minNotional']
 
-        quantity = float_to_decimal(value, step)
+        quantity = float_to_decimal(float(value), step)
         min_notional_in_base_asset = float_to_decimal(
             float(min_notional) / float(price), step)
         if quantity < min_notional_in_base_asset:
@@ -206,12 +207,32 @@ class BaseBot:
         quantity: Decimal,
         price: Decimal | float,
         order_type: str = 'LIMIT',
+        newClientOrderId: str = '',
     ) -> bool:
         """The function opens a new one order."""
         try:
             if isinstance(price, float):
                 price = await self.prepare_price(price, strategy)
-            await open_order(strategy.symbol, side, quantity, price, order_type)
+            await open_order(strategy.symbol, side, quantity, price, order_type, newClientOrderId)
+        except OpenOrderError:
+            return False
+
+        return True
+
+    async def modify_order(
+        self,
+        order_id: int,
+        strategy: Strategy,
+        side: str,
+        quantity: Decimal,
+        price: Decimal | float,
+        origClientOrderId: str = '',
+    ) -> bool:
+        """The function midify an exists order."""
+        try:
+            if isinstance(price, float):
+                price = await self.prepare_price(price, strategy)
+            await modify_order(order_id, strategy.symbol, side, quantity, price, origClientOrderId)
         except OpenOrderError:
             return False
 
@@ -384,14 +405,14 @@ class BaseBot:
                         )
                         self.positions = update_or_insert(
                             self.positions, row, primary_keys)
-                        logger.info(f"positions updated for {position['s']}")
+                        # logger.info(f"positions updated for {position['s']}")
 
                     # del closed positions
                     indexes = self.positions[self.positions['amount'] == 0].index
                     self.positions = self.positions.drop(
                         indexes).reset_index(drop=True)
 
-                    logger.info(f"positions: {self.positions}")
+                    # logger.info(f"positions: {self.positions}")
 
                     self.positions.to_csv('positions.csv', index=False)
 
@@ -567,20 +588,20 @@ class BaseBot:
                     status=symbol['status'],
                     baseAsset=symbol['baseAsset'],
                     quoteAsset=symbol['quoteAsset'],
-                    pricePrecision=float(symbol['pricePrecision']),
-                    quantityPrecision=float(symbol['quantityPrecision']),
-                    baseAssetPrecision=float(symbol['baseAssetPrecision']),
-                    quotePrecision=float(symbol['quotePrecision']),
+                    pricePrecision=symbol['pricePrecision'],
+                    quantityPrecision=symbol['quantityPrecision'],
+                    baseAssetPrecision=symbol['baseAssetPrecision'],
+                    quotePrecision=symbol['quotePrecision'],
                 )
                 for filtr in symbol['filters']:
                     if filtr['filterType'] == 'PRICE_FILTER':
-                        row['tickSize'] = float(filtr['tickSize'])
+                        row['tickSize'] = filtr['tickSize']
                     elif filtr['filterType'] == 'LOT_SIZE':
-                        row['maxQty'] = float(filtr['maxQty'])
-                        row['minQty'] = float(filtr['minQty'])
-                        row['stepSize'] = float(filtr['stepSize'])
+                        row['maxQty'] = Decimal(filtr['maxQty'])
+                        row['minQty'] = Decimal(filtr['minQty'])
+                        row['stepSize'] = Decimal(filtr['stepSize'])
                     elif filtr['filterType'] == 'MIN_NOTIONAL':
-                        row['minNotional'] = float(filtr['notional'])
+                        row['minNotional'] = Decimal(filtr['notional'])
 
                 self.market_info = update_or_insert(
                     self.market_info, row, ['market', 'symbol'])
