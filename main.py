@@ -20,15 +20,15 @@ async def main():
             )
         ),
         dict(
-            name='bb',
+            name='bb_on_lines',
             market='um-futures-cross',
             symbol='USDCUSDT',
             tf='15m',
             window=100,
             params=dict(
-                bb_period=20,
-                bb_dev=2,
-                risk=50,
+                bb_period=60,
+                bb_dev=2.2,
+                risk=400,
             )
         ),
     ]

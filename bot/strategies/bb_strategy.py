@@ -11,27 +11,34 @@ logger = logging.getLogger(__name__)
 
 
 async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kline_closed: bool) -> None:
+    name = strategy.name
+    symbol = strategy.symbol
+    bb_period = strategy.params.bb_period
+    bb_dev = strategy.params.bb_dev
+    market = strategy.market
+    risk = strategy.params.risk
+
     def log_info(message: Any):
         logger.info(
-            f'{strategy.name}_{strategy.symbol}_{strategy.params.bb_period}_{strategy.params.bb_dev}: {message}')
+            f'{name}_{symbol}_{bb_period}_{bb_dev}: {message}')
 
     if not is_kline_closed:
         return
 
     # calculate indicators
     indicators = dict(
-        bb=dict(period=strategy.params.bb_period,
-                deviation=strategy.params.bb_dev)
+        bb=dict(period=bb_period,
+                deviation=bb_dev)
     )
     df = calculate_indicators(klines, indicators)
 
     # get info
     quote_asset = await bot.get_quote_asset(strategy)
-    price_float: float = await bot.last_price(strategy.market, strategy.symbol)
+    price_float: float = await bot.last_price(market, symbol)
     price: Decimal = await bot.prepare_price(price_float, strategy)
     tick = df.iloc[-1]
     await asyncio.gather(
-        bot.update_accaunt_info(strategy.market), # for update available balance (with openned positions on cross account)
+        bot.update_accaunt_info(market), # for update available balance (with openned positions on cross account)
         # bot.update_open_orders(strategy),
     )
     positions: pd.DataFrame = await bot.get_strategy_positions(strategy)
@@ -61,7 +68,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
         if price < tick['bb_lower']:
         # BUY
             quantity = await bot.prepare_quantity(
-                float(balance['ab']) * strategy.params.risk / 100,
+                float(balance['ab']) * risk / 100,
                 strategy,
                 price,
             )
@@ -70,7 +77,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
         elif price > tick['bb_upper']:
             # SELL
             quantity = await bot.prepare_quantity(
-                float(balance['ab']) * strategy.params.risk / 100,
+                float(balance['ab']) * risk / 100,
                 strategy,
                 price,
             )
