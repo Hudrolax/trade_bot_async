@@ -82,7 +82,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
         side = 'BUY' if sum_amount < 0 else 'SELL'
         tasks.append(asyncio.create_task(
             bot.open_order(strategy, side, quantity, middle_price,
-                           newClientOrderId=f'{uuid.uuid4()}_close'),
+                           newClientOrderId=f'{secrets.token_urlsafe(36)[:25]}_close'),
         ))
         log_info(f'position amount: {sum_amount}')
         log_info(
