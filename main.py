@@ -7,18 +7,18 @@ logger = logging.getLogger('main')
 
 async def main():
     strategies = [
-        # dict(
-        #     name='bb',
-        #     market='um-futures-cross',
-        #     symbol='SUIUSDT',
-        #     tf='15m',
-        #     window=100,
-        #     params=dict(
-        #         bb_period=20,
-        #         bb_dev=2.5,
-        #         risk=30,
-        #     )
-        # ),
+        dict(
+            name='bb',
+            market='um-futures-cross',
+            symbol='COMBOUSDT',
+            tf='15m',
+            window=100,
+            params=dict(
+                bb_period=20,
+                bb_dev=2,
+                risk=30,
+            )
+        ),
         dict(
             name='bb_on_lines',
             market='um-futures-cross',
@@ -28,7 +28,7 @@ async def main():
             params=dict(
                 bb_period=60,
                 bb_dev=2.2,
-                risk=800,
+                risk=1000,
             )
         ),
     ]
