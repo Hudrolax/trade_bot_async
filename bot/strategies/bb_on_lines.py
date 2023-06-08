@@ -98,10 +98,19 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
         if o_name in orders_plan.keys():
             # modify, is needed
             price_diff = float(row['price']) - float(orders_plan[o_name]['price'])
-            if float(price_diff) / float(orders_plan[o_name]['price']) > 0.005 \
+            percent_diff = float(price_diff) / float(orders_plan[o_name]['price'])
+            if percent_diff > 0.007 \
                 or row['quantity'] != orders_plan[o_name]['quantity']:
+                print(f'diff {percent_diff}')
+                print(f"row quantity {row['quantity']}, plan quantity {orders_plan[o_name]['quantity']}")
+
                 tasks.append(asyncio.create_task(
-                    bot.modify_order(row['id'], strategy, **orders_plan[o_name])
+                    bot.modify_order(
+                        order_id=row['id'],
+                        strategy=strategy,
+                        origClientOrderId=row['client_id'],
+                        **orders_plan[o_name],
+                    )
                 ))
                 log_info(f"{o_name} order {row['side']} id {row['id']} is modified.")
             else:
