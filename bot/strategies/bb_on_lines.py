@@ -115,13 +115,13 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
                 log_info(f"{o_name} order {row['side']} id {row['id']} is modified.")
             else:
                 log_info(f"Order {o_name} {row['side']} might be stay on the place.")
+            # delete from plan (not open a new one)
+            del orders_plan[o_name]
         else: # cancel the order
             tasks.append(asyncio.create_task(
                 bot.cancel_order(strategy, row['id'])))
             log_info(
                 f'Cancel the {o_name} {row["side"]} order with id {row["id"]}')
-        # delete from plan (not open a new one)
-        del orders_plan[o_name]
 
     for _, row in orders.iterrows():
         if '_close' in row['client_id']:
