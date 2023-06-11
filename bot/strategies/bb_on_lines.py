@@ -99,7 +99,7 @@ async def on_tick(bot: BaseBot, strategy: Strategy, klines: pd.DataFrame, is_kli
             # modify, is needed
             price_diff = float(row['price']) - float(orders_plan[o_name]['price'])
             percent_diff = float(price_diff) / float(orders_plan[o_name]['price'])
-            if percent_diff > 0.005 \
+            if percent_diff > 0.002 \
                 or row['quantity'] != orders_plan[o_name]['quantity']:
                 print(f'diff {percent_diff}')
                 print(f"row quantity {row['quantity']}, plan quantity {orders_plan[o_name]['quantity']}")
