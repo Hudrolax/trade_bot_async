@@ -241,10 +241,10 @@ async def open_order(
             **kwargs
         }
         response = await authorized_request(FUTURES_ORDER_URL, 'post', params, OpenOrderError, logger)
-    except Exception as e:
-        error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
-        error_message += traceback.format_exc()
-        logger.critical(error_message)
+    except OpenOrderError as e:
+        # error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+        # error_message += traceback.format_exc()
+        # logger.warning(error_message)
         raise e
 
     if not isinstance(response, dict):
@@ -285,10 +285,10 @@ async def cancel_order(symbol: str, order_id: int = -1, origClientOrderId: str =
             params['origClientOrderId'] = origClientOrderId
 
         response = await authorized_request(FUTURES_ORDER_URL, 'delete', params, CloseOrderError, logger)
-    except Exception as e:
-        error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
-        error_message += traceback.format_exc()
-        logger.critical(error_message)
+    except CloseOrderError as e:
+        # error_message = f"Exception occurred: {type(e).__name__}, {e.args}\n"
+        # error_message += traceback.format_exc()
+        # logger.critical(error_message)
         raise e
 
     if not isinstance(response, dict):
