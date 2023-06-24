@@ -19,18 +19,18 @@ async def main():
                 risk=30,
             )
         ),
-        dict(
-            name='bb_on_lines',
-            market='um-futures-cross',
-            symbol='USDCUSDT',
-            tf='15m',
-            window=100,
-            params=dict(
-                bb_period=60,
-                bb_dev=2.2,
-                risk=1000,
-            )
-        ),
+        # dict(
+        #     name='bb_on_lines',
+        #     market='um-futures-cross',
+        #     symbol='USDCUSDT',
+        #     tf='15m',
+        #     window=100,
+        #     params=dict(
+        #         bb_period=60,
+        #         bb_dev=2.2,
+        #         risk=1000,
+        #     )
+        # ),
     ]
 
     bot = Bot(strategies=strategies)
